@@ -2,6 +2,7 @@
 // . = class
 // [type=XX] = type
 // [name=XX]? = name
+// Comments testing
 
 
 //initialize counter. q: current question, qMax: total question count
