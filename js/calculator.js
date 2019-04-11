@@ -45,7 +45,6 @@ function handleClick() {
 		}
         q++;
     } else {
-		alert('Submitting'); 
 		
 		// get value of all input fields needed 
 		// store into variables
@@ -57,6 +56,20 @@ function handleClick() {
 		var asset_value = $('#asset').val();
 		var housing_status = $('#housing-status').val();
 		var disability = $('#disability').val();
+		
+		//add review before submiting
+		alert(
+			'Submitting\n'+
+			'Marital Status : ' + marital_status + '\n' +
+			'Number of Children : ' + vol_child + '\n' +
+			'Age of Youngest Child : ' + age_child + '\n' +
+			'Household Size : ' + household_size + '\n' +
+			'Estimated Monthly Income : ' + estimated_income + '\n' +
+			'Asset Value : ' + asset_value + '\n' +
+			'Housing Status : ' + housing_status + '\n' +
+			'Disability : ' + disability
+		); 
+		
 
 		//SNAP
 		var snap_val = snap(estimated_income, household_size);
@@ -68,7 +81,7 @@ function handleClick() {
 		$('#wic_result').text("WIC : " + wic_val);
 
 		return false;
-		
+
     }
 }
 
