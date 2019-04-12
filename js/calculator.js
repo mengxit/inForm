@@ -76,7 +76,7 @@ function handleClick() {
 
 	
    // Print Snap Value 
-   $('#snap_result').text(parseInt(snap_val));
+   $('#snap_result').text("SNAP : " + parseInt(snap_val));
 
    // Get HIP value
    var hip_val =  hip(snap_val, household_size);
@@ -90,7 +90,7 @@ function handleClick() {
   // Get MRVP value 
    var mrvp_val = rental_voucher(estimated_income, household_size, vol_child);
   // Print MRVP value 
-   $('#mrvp_result').text(parseInt(mrvp_val));
+   $('#mrvp_result').text("MRVP : " + parseInt(mrvp_val));
 
     
 
