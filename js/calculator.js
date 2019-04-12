@@ -45,7 +45,6 @@ function handleClick() {
 		}
         q++;
     } else {
-		alert('Submitting'); 
 		
 		// get value of all input fields needed 
 		// store into variables
@@ -57,16 +56,48 @@ function handleClick() {
 		var asset_value = $('#asset').val();
 		var housing_status = $('#housing-status').val();
 		var disability = $('#disability').val();
+		
+		//add review before submiting
+		alert(
+			'Submitting\n'+
+			'Marital Status : ' + marital_status + '\n' +
+			'Number of Children : ' + vol_child + '\n' +
+			'Age of Youngest Child : ' + age_child + '\n' +
+			'Household Size : ' + household_size + '\n' +
+			'Estimated Monthly Income : ' + estimated_income + '\n' +
+			'Asset Value : ' + asset_value + '\n' +
+			'Housing Status : ' + housing_status + '\n' +
+			'Disability : ' + disability
+		); 
+		
 
-		//SNAP
+		//Get SNAP value
 		var snap_val = snap(estimated_income, household_size);
-		var mrvp_val = rental_voucher(estimated_income, household_size, vol_child);
-		var hip_val =  hip(snap_val, household_size);
+
+	
+   // Print Snap Value 
+   $('#snap_result').text(parseInt(snap_val));
+
+   // Get HIP value
+   var hip_val =  hip(snap_val, household_size);
+
+   //Get WIC value
+   var wic_val = wic(estimated_income, household_size, age_child)
+  //Print WIC value 
+   $('#wic_result').text("WIC : " + wic_val);
+
+
+  // Get MRVP value 
+   var mrvp_val = rental_voucher(estimated_income, household_size, vol_child);
+  // Print MRVP value 
+   $('#mrvp_result').text(parseInt(mrvp_val));
+
+    
 
 		
-		$('#result').text(parseInt(mrvp_val));
+		
 		return false;
-		console.log(5 + 1);
+
     }
 }
 
@@ -123,22 +154,37 @@ function hip(snap_val, household_size){
     return hip_value;
 }
 
+//WIC FUNCTION CALCULATION
+
+function wic(estimated_income, household_size, age_child){
+	//NEED TO UPDATE QUESTION TO INCLUDE MONTHLY INCOME NOT YEARLY & CONVERT TO INT
+	var Snap_val = 0;
+	var IncomeArray = ["1872","2538","3204","3870","4536","5202","5868","6534","7200","7866"];
+	var HouseholdMax = 10;
+    for (var i = 0; i < HouseholdMax; i++) {
+        if(parseInt(household_size - 1) == i) {
+        	if(parseInt(estimated_income) <= parseInt(IncomeArray[i])){
+				if(age_child == "0-1")
+				{
+					Snap_val = "You qualify for both infant and mother food package."
+				}
+				if(age_child == "2-4")
+				{
+					Snap_val = "You qualify for child food package."
+				}
+				if(age_child == "Expecting in 4 Months")
+				{
+					Snap_val = "You qualify for mother food package."
+				}
+        	}
+
+        }
+    }
+    return Snap_val
+}
 
 function rental_voucher(estimated_income, household_size, vol_child){
-	//NEED TO UPDATE QUESTION TO INCLUDE MONTHLY INCOME NOT YEARLY & CONVERT TO INT
-	
-	// Create arrauys of Voucher Sizes for different Vn values (apartment size)
-	/*
-	var v1 =    ["805",	"760",	"715",	"670",	"625",	"580",	"535",	"490",	"445",	"400",	"355",	"310",	"300",	"300"];
-	var v2 =	["944",	"899",	"854",	"809",	"764",	"719",	"674",	"629",	"584",	"539",	"494",	"449",	"404",	"359"];
-	var v3 =	["1147", "1102", "1057", "1012", "967",	"922",	"877",	"832",	"787",	"742",	"697",	"652",	"607",	"562"];
-	var v4 =	["1342", "1297", "1252", "1207", "1162", "1117",	"1072",	"1027",	"982",	"937",	"892",	"847",	"802",	"757"];
-	var v5 =	["1571", "1526", "1481", "1436", "1391", "1346",	"1301",	"1256",	"1211",	"1166",	"1121",	"1076",	"1031",	"986"];
-	var v6 =	["1807", "1755", "1703", "1651", "1600", "1548",	"1496",	"1444",	"1393",	"1341",	"1289",	"1237",	"1186",	"1134"];
-	var v7 =	["2042", "1984",	"1925",	"1867",	"1808",	"1750",	"1691",	"1633",	"1574",	"1516",	"1457",	"1399",	"1340",	"1282"];
-	var v8 =	["2278", "2213",	"2147",	"2082",	"2017",	"1952",	"1886",	"1821",	"1756",	"1691",	"1625",	"1560",	"1495",	"1430"];
 
-*/ 
 	var voucher = 
 [['v1',	805,	760,	715,	670,	625,	580,	535,	490,	445,	400,	355,	310,	300,	300,	300,	300,	300,	300,	300],
 ['v2',	944,	899,	854,	809,	764,	719,	674,	629,	584,	539,	494,	449,	404,	359,	333,	313,	300,	300,	300],

@@ -27,7 +27,8 @@
 
     <h1>Benefit Calculator</h1>
 	
-	<!-- SUBMISSION FORM FOR BENEFIT INPUT -->
+  <!-- SUBMISSION FORM FOR BENEFIT INPUT -->
+  <!-- ADD PROGRESS BAR TO EACH DIV-->
 
 	<form id="myForm">
 	  <div class="form-group">
@@ -59,11 +60,12 @@
       <div class="group">
           <label for="age-child">Age of youngest child</label>
             <select name="age-child" id="age-child"> <br/>
-              <option value="0-2">0-2</option>
-              <option value="1-5">3-5</option>
-              <option value="6-10">6-10</option>
-              <option value="10+">10+</option>
-              <option value="Expecting in 3 Months">Expecting in 3 Months</option>
+              <option value="0-1">0-1</option>
+              <option value="1-4">2-4</option>
+              <option value="5-10">5-10</option>
+              <option value="11-18">11-18</option>
+              <option value="18+">18+</option>
+              <option value="Expecting in 4 Months">Expecting in 4 Months</option>
             </select><br/><br/>
       </div>
 
@@ -128,9 +130,9 @@
       <div class="group">
         <label for="housing-status">What type of housing do you live in?</label>
           <select name="housing-status" id="housing-status"> <br/>
-            <option value="owned">Owned</option>
-            <option value="rental-independent">Rental</option>
-            <option value="rental-public">Subsidized</option>
+            <option value="Owned">Owned</option>
+            <option value="Rental">Rental</option>
+            <option value="Subsidized">Subsidized</option>
           </select><br/><br/>
       </div>
 
@@ -138,8 +140,8 @@
       <div class="group">
         <label for="disability">Does anyone in the household have a disability?</label>
         <select name="disability" id="disability"> <br/>
-          <option value="disabled">Yes</option>
-          <option value="not-disabled">No</option>
+          <option value="Disabled">Yes</option>
+          <option value="Not-disabled">No</option>
         </select><br/><br/>
       </div>
 
@@ -162,6 +164,7 @@
 
 
   <!-- PRINTED RESULTS -->
+  <!-- ADD HOVEROVER FUNCTIONALITY-->
   
   <h2>Benefit Range</h2>
 
