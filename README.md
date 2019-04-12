@@ -1,5 +1,5 @@
 # nudgerplus
-MDE Studio 3 - Nudger+
+MDE Studio 3 - Nudge+
 
 #Features to Dev
 --Review form before submission
