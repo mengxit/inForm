@@ -214,7 +214,9 @@ function rental_voucher(estimated_income, household_size, vol_child){
 	// Variable definitions
 
 	// set voucher size = 0. To be changed and returned.
-	var voucher_size;
+	var voucher_amount;
+	// set variable for lower bound of voucher range.
+	var l_voucher_amount; 
 	// Variable to define numner of rooms
 	var vol_room = 0;
 	// Variable to ingest income max values for coomparative to inputted income. 
@@ -249,14 +251,27 @@ function rental_voucher(estimated_income, household_size, vol_child){
 
 	// Determine voucher size by doing a lookup. 
 	// voucher_size = parseInt(v_array[ArrayLoc]);
-	voucher_size = voucher[vol_room-1][ArrayLoc];
+	
+	// Upper bounch for voucher amount.
+	voucher_amount = voucher[vol_room-1][ArrayLoc];
+
+	// Create lower bound for voucher amount. 
+	// If current room size = 1, lower bound = 0. 
+
+	if(vol_room < 2){
+		l_voucher_amount = 0;
+	}
+	else {
+		l_voucher_amount = voucher[vol_room-2][ArrayLoc];
+	}
+
 	console.log(estimated_income);
 	console.log(ArrayLoc);
 	console.log(vol_room);
 	console.log(voucher_size);
 
     
-    return voucher_size
+    return voucher_amount
 }
 
 //TAFDC CALCULATION
