@@ -265,10 +265,8 @@ function rental_voucher(estimated_income, household_size, vol_child){
 		l_voucher_amount = voucher[vol_room-2][ArrayLoc];
 	}
 
-	console.log(estimated_income);
-	console.log(ArrayLoc);
-	console.log(vol_room);
-	console.log(voucher_size);
+	var range = "Your potential MRVP range is between " + l_voucher_amount +" and "+ voucher_amount + "per month.";
+	console.log(range);
 
     
     return voucher_amount
