@@ -71,15 +71,16 @@ function handleClick() {
 		); 
 		
 
-		//Get SNAP value
-		var snap_val = snap(estimated_income, household_size);
+	//Get SNAP value
+	var snap_val = snap(estimated_income, household_size);
+	var snap_high_bound = snap_val.high_bound;
+	var snap_low_bound = snap_val.low_bound;
+	$('#mrvp_result').text("MRVP: Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
 
-	
-   // Print Snap Value 
-   $('#snap_result').text("SNAP :  $" + parseInt(snap_val));
 
    // Get HIP value
-   var hip_val =  hip(snap_val, household_size);
+   var hip_val =  hip(snap_high_bound, household_size);
+   console.log(hip_val); 
 
    //Get WIC value
    var wic_val = wic(estimated_income, household_size, age_child);
@@ -140,18 +141,26 @@ function earned_income(marital_status, vol_child, estimated_income){
 
 function snap(estimated_income, household_size){
 	//NEED TO UPDATE QUESTION TO INCLUDE MONTHLY INCOME NOT YEARLY & CONVERT TO INT
-	var snap_val = 0;
+	var low_bound = 1;
+	var high_bound = 1;
 	var snap_Max = ["192",	"352",	"504",	"640",	"760",	"913",	"1009",	"1153",	"1297",	"1441",];
 	var IncomeArray = ["2023","2743","3463","4183","4903","5623","6343","7603","8347","9091"];
 	var HouseholdMax = 10;
     for (var i = 0; i < HouseholdMax; i++) {
         if(parseInt(household_size - 1) ==i) {
         	if(parseInt(estimated_income)<=parseInt(IncomeArray[i])){
-        		snap_val=snap_Max[i];
+				// Set high bound to equal to snap_Max array location.
+				high_bound=snap_Max[i];
+				// Set low bound to next lowest location in snap_max array. 
+				if(i!=0){
+					low_bound=snap_Max[i-1];	}
         	}
         }
     }
-    return snap_val;
+    return {
+		low_bound: low_bound,
+		high_bound: high_bound
+	};
 }
 
 function hip(snap_val, household_size){
