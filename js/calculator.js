@@ -75,7 +75,7 @@ function handleClick() {
 	var snap_val = snap(estimated_income, household_size);
 	var snap_high_bound = snap_val.high_bound;
 	var snap_low_bound = snap_val.low_bound;
-	$('#mrvp_result').text("MRVP: Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
+	$('#snap_result').text("SNAP: Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
 
 
    // Get HIP value
