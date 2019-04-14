@@ -89,10 +89,13 @@ function handleClick() {
 
   // Get MRVP value 
    var mrvp_val = rental_voucher(estimated_income, household_size, vol_child);
-  // Print MRVP value 
-   $('#mrvp_result').text("MRVP :  $" + parseInt(mrvp_val));
-
-
+  
+  // MRVP bounds
+   var mrvp_high_bound = mrvp_val.high_bound;
+   var mrvp_low_bound = mrvp_val.low_bound;
+  
+   $('#mrvp_result').text("MRVP: Your potential benefit range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
+		
 
   // Get TAFDC value 
 	var tafdc_val = tafdc(estimated_income, household_size, age_child,  asset_value, housing_status);
@@ -214,9 +217,9 @@ function rental_voucher(estimated_income, household_size, vol_child){
 	// Variable definitions
 
 	// set voucher size = 0. To be changed and returned.
-	var voucher_amount;
+	var high_bound;
 	// set variable for lower bound of voucher range.
-	var l_voucher_amount; 
+	var low_bound; 
 	// Variable to define numner of rooms
 	var vol_room = 0;
 	// Variable to ingest income max values for coomparative to inputted income. 
@@ -252,24 +255,29 @@ function rental_voucher(estimated_income, household_size, vol_child){
 	// Determine voucher size by doing a lookup. 
 	// voucher_size = parseInt(v_array[ArrayLoc]);
 	
-	// Upper bounch for voucher amount.
-	voucher_amount = voucher[vol_room-1][ArrayLoc];
+	// Upper bound for voucher amount.
+	high_bound = voucher[vol_room-1][ArrayLoc];
 
 	// Create lower bound for voucher amount. 
 	// If current room size = 1, lower bound = 0. 
 
 	if(vol_room < 2){
-		l_voucher_amount = 0;
+		low_bound = 0;
 	}
 	else {
-		l_voucher_amount = voucher[vol_room-2][ArrayLoc];
+		low_bound = voucher[vol_room-2][ArrayLoc];
 	}
 
-	var range = "Your potential MRVP range is between " + l_voucher_amount +" and "+ voucher_amount + "per month.";
+	var range = "Your potential MRVP range is between " + low_bound +" and "+ high_bound + "per month.";
+	
 	console.log(range);
 
-    
-    return voucher_amount
+
+	return {
+		low_bound: low_bound,
+		high_bound: high_bound
+	};
+	
 }
 
 //TAFDC CALCULATION
