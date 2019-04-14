@@ -101,13 +101,13 @@ function handleClick() {
   // Get TAFDC value 
 	var tafdc_val = tafdc(estimated_income, household_size, age_child,  asset_value, housing_status);
   // Print TAFDC value 
-	$('#tafdc_result').text("TAFDC :  $" + parseInt(tafdc_val));
+	$('#tafdc_result').text("TAFDC Range is :  $ " + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
 
 
 	// Get MLIHEAP value 
 	  var mliheap_val = mliheap(estimated_income, household_size, housing_status);
 	// Print MLIHEAP value 
-	$('#mliheap_result').text("MLIHEAP :  $" + parseInt(mliheap_val));
+	$('#mliheap_result').text("MLIHEAP Range is :  $ " + parseInt(mliheap_val.mliheap_low_bound) + " and $ " + parseInt(mliheap_val.mliheap_high_bound));
 
 	// Get MEITC value 
 		var meitc_val = meitc(marital_status, estimated_income, vol_child);
@@ -299,10 +299,12 @@ function rental_voucher(estimated_income, household_size, vol_child){
 
 function tafdc(estimated_income, household_size, age_child, asset_value, housing_status){
 	var tafdc_val = 0;
+	var tafdc_min = 0;
+	var tafdc_max = 0;
 	var IncomeArray_privatehousing = [588,	691,	793,	891,	992,	1096,	1197,	1297,	1397,	1498];
-	var tafdc_size_private = [388,	491,	593,	691,	792,	896,	997,	1097,	1197,	1298];
+	var tafdc_size_private = [1,388,	491,	593,	691,	792,	896,	997,	1097,	1197,	1298];
 	var IncomeArray_publichousing = [628,	731,	833,	931,	1032,	1136,	1237,	1337,	1437,	1538];
-	var tafdc_size_public = [428,	531,	633,	731,	832,	936,	1037,	1137,	1237,	1338];
+	var tafdc_size_public = [1,428,	531,	633,	731,	832,	936,	1037,	1137,	1237,	1338];
 	var HouseholdMax = 10;
 
 	if ((asset_value == "Less then 20,000") && (age_child != "18+") && (age_child != "Not Applicable"))
@@ -316,19 +318,27 @@ function tafdc(estimated_income, household_size, age_child, asset_value, housing
 
 			if (housing_status == "Subsidized") {
 				if (parseInt(estimated_income) <= IncomeArray_publichousing[i]){
-					tafdc_val = tafdc_size_private[i];
+						tafdc_min = tafdc_size_private[i];
+						tafdc_max = tafdc_size_private[i+1];
 					}
 			}
 			
 			 else {			
 					if (parseInt(estimated_income) <= IncomeArray_privatehousing[i]){
-					tafdc_val = tafdc_size_public[i];
+						tafdc_min = tafdc_size_private[i];
+						tafdc_max = tafdc_size_public[i+1];
 					}
 			 }
 			
 
         }
 	  }
+	}
+	
+	tafdc_val =
+	{
+		tafdc_low_bound: tafdc_min,
+		tafdc_high_bound: tafdc_max
 	}
 
 	return tafdc_val	
@@ -342,6 +352,9 @@ function mliheap(estimated_income, household_size, housing_status){
 
 
 	var mliheap_val = 0;
+	var mliheap_min = 0;
+	var mliheap_max = 0;
+
 	var HouseholdMax = 10;
 
 	var IncomeArray = [
@@ -356,8 +369,8 @@ function mliheap(estimated_income, household_size, housing_status){
 	[3892,	4865,	5838,	6810,	7783,	8024],
 	[4252,	5315,	6378,	7440,	8195,	8195]];
 
-	var mliheap_unsubsidized = [225, 191, 168, 148, 148, 116];
-	var mliheap_subsidized = [157, 138, 122,107,107,84];
+	var mliheap_unsubsidized = [1, 225, 191, 168, 148, 148, 116];
+	var mliheap_subsidized = [1, 157, 138, 122,107,107,84];
 
 
 
@@ -380,20 +393,29 @@ function mliheap(estimated_income, household_size, housing_status){
 			
 				if (housing_status == "Subsidized") {
 
-					mliheap_val = mliheap_subsidized[mliheaplevelcounter]
+					mliheap_min = mliheap_subsidized[mliheaplevelcounter]
+					mliheap_max = mliheap_subsidized[mliheaplevelcounter+1]
 
 				}
 				
 				else {			
 					console.log("mliheap unsub");
 					
-					mliheap_val = mliheap_unsubsidized[mliheaplevelcounter];
+					mliheap_min = mliheap_subsidized[mliheaplevelcounter]
+					mliheap_max = mliheap_subsidized[mliheaplevelcounter+1]
 				
 				}
 
 			}	
 	}
 	}
+
+	mliheap_val =
+	{
+		mliheap_low_bound: mliheap_min,
+		mliheap_high_bound: mliheap_max
+	}
+
 	return mliheap_val	
 }
 
