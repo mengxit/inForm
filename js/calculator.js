@@ -108,6 +108,11 @@ function handleClick() {
 	  var mliheap_val = mliheap(estimated_income, household_size, housing_status);
 	// Print MLIHEAP value 
 	$('#mliheap_result').text("MLIHEAP :  $" + parseInt(mliheap_val));
+
+	// Get MEITC value 
+		var meitc_val = meitc(marital_status, estimated_income, vol_child);
+	// Print MEITC value 
+		$('#meitc_result').text("MEITC Range is :  $ " + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
 			
 		
 		return false;
@@ -391,3 +396,66 @@ function mliheap(estimated_income, household_size, housing_status){
 	}
 	return mliheap_val	
 }
+
+//MEITC FUNCTION CALCULATION
+
+function meitc(marital_status, estimated_income, vol_child){
+	
+	var meitc_val = 0;
+	var meitc_min = 0;
+	var meitc_max = 0;
+
+	var incomearray_single = [
+		[721, 1298],
+		[1586, 3425],
+		[1586, 3892],
+		[1586, 4180]
+	]
+
+	var incomearray_married = [
+		[1204, 1781],
+		[2068, 3907],
+		[2068, 4374],
+		[2068, 4663]
+	]
+
+	var meitc_credit = [1,122,811,1340,1508]
+
+	var child_counter = parseInt(vol_child);
+
+	if (child_counter > 3) {
+		child_counter = 3; //cap at three for child count
+	} 
+
+	if (marital_status == "Married"){
+
+		if ((parseInt(estimated_income) > incomearray_married[child_counter][0]) &&
+		(parseInt(estimated_income) < incomearray_married[child_counter][1])){
+
+			meitc_min = meitc_credit[child_counter];
+			meitc_max = meitc_creditp[child_counter +1];
+		
+		}
+
+	}
+	else{
+		if ((parseInt(estimated_income) > incomearray_single[child_counter][0]) &&
+		(parseInt(estimated_income) < incomearray_single[child_counter][1])){
+
+			meitc_min = meitc_credit[child_counter];
+			meitc_max = meitc_credit[child_counter +1];
+		
+		}
+
+	}
+
+	meitc_val =
+	{
+		meitc_low_bound: meitc_min,
+		meitc_high_bound: meitc_max
+	}
+
+	return meitc_val
+	
+}
+
