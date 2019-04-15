@@ -30,6 +30,17 @@
     -webkit-transform: rotate(135deg);
   }*/
 
+  @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+  body {
+    font-family: Roboto, sans-serif;
+  }
+  
+  #chart {
+    max-width: 650px;
+    margin: 35px auto;
+  }
+
 .btn  {
     -webkit-appearance: none;
     position:relative; 
@@ -43,7 +54,7 @@
 
 #wrapper{
     width:100%; 
-    height:400px; 
+    height:40px; 
     border:1px solid black;
 }
 /*
@@ -59,7 +70,7 @@ button{
 /*Downloaded from https://www.codeseek.co/BuddyLReno/dot-check-progress-bar-NNojRP */
 .ProgressBar {
  margin: 0 auto;
- padding: 2em 0 3em;
+ padding: 2em 0 0;
  list-style: none;
  position: relative;
  display: flex;
@@ -131,6 +142,6 @@ button{
 
 .wrapper {
  max-width: 1000px;
- margin: 4em auto;
+ margin: 4em auto 0em;
  font-size: 12px;
 }

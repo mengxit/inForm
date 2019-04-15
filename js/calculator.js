@@ -86,21 +86,22 @@ function handleClick() {
 
 	//Get SNAP value
 	var snap_val = snap(estimated_income, household_size);
-	var snap_high_bound = snap_val.high_bound;
-	var snap_low_bound = snap_val.low_bound;
+	var snap_high_bound = parseInt(snap_val.high_bound);
+	var snap_low_bound = parseInt(snap_val.low_bound);
 	$('#snap_result').text("SNAP: Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
 
 
    // Get HIP value
-   var hip_val =  hip(snap_high_bound, household_size);
+	 var hip_val =  hip(snap_high_bound, household_size);
+	 hip_val = parseInt(hip_val);
    console.log(hip_val); 
    //PRINT HIP value
-   if (hip_val.hip_high_bound != 0 ){
+   if (hip_val!= 0 ){
    $('#hip_result').text("HIP : Your potential benefit is $" + hip_val);
    }
 
    //Get WIC value
-   var wic_val = wic(vol_child, estimated_income, household_size, age_child);
+	 var wic_val = wic(vol_child, estimated_income, household_size, age_child);
   //Print WIC value 
   if (wic_val != "Disqualified" ){
    $('#wic_result').text("WIC : " + wic_val);
@@ -111,8 +112,8 @@ function handleClick() {
    var mrvp_val = rental_voucher(estimated_income, household_size, vol_child);
   
   // MRVP bounds
-   var mrvp_high_bound = mrvp_val.high_bound;
-   var mrvp_low_bound = mrvp_val.low_bound;
+   var mrvp_high_bound = parseInt(mrvp_val.high_bound);
+   var mrvp_low_bound = parseInt(mrvp_val.low_bound);
 
    if (mrvp_high_bound != 0){
    $('#mrvp_result').text("MRVP: Your potential benefit range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
@@ -120,27 +121,100 @@ function handleClick() {
 
   // Get TAFDC value 
 	var tafdc_val = tafdc(estimated_income, household_size, age_child,  asset_value, housing_status);
-  // Print TAFDC value 
-  if (tafdc_val.tafdc_high_bound != 0){
+	var tafdc_high_bound = parseInt(tafdc_val.tafdc_high_bound);
+	// Print TAFDC value 
+  if (tafdc_high_bound != 0){
 	$('#tafdc_result').text("TAFDC: Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
   }
 
 	// Get MLIHEAP value 
-	  var mliheap_val = mliheap(estimated_income, household_size, housing_status);
-
+	var mliheap_val = mliheap(estimated_income, household_size, housing_status);
+	var mliheap_high_bound = parseInt(mliheap_val.mliheap_high_bound);
 	// Print MLIHEAP value
-	if (mliheap_val.mliheap_high_bound != 0 ){
+	if (mliheap_high_bound != 0 ){
 	$('#mliheap_result').text("MLIHEAP: Your potential benefit range is between: $" + parseInt(mliheap_val.mliheap_low_bound) + " and $ " + parseInt(mliheap_val.mliheap_high_bound));
 	}
 
 	// Get MEITC value 
-		var meitc_val = meitc(marital_status, estimated_income, vol_child);
+	var meitc_val = meitc(marital_status, estimated_income, vol_child);
 	// Print MEITC value 
-	if (meitc_val.meitc_high_bound != 0 ){
+	var meitc_high_bound = parseInt(meitc_val.meitc_high_bound);
+	if (meitc_high_bound != 0 ){
 		$('#meitc_result').text("MEITC: Your potential benefit range is between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
 	}	
-		
-		return false;
+	
+	// Adding "total additional benefits" to be fed into the chart as "additional" value.
+	var tab = parseInt(snap_high_bound) + parseInt(hip_val) + parseInt(mrvp_high_bound) + tafdc_val.tafdc_high_bound + mliheap_val.mliheap_high_bound + meitc_val.meitc_high_bound; 
+	
+	console.log(tab)
+	// INCOME BAR GRAPH 
+
+	var options = {
+		chart: {
+				height: 150,
+				type: 'bar',
+				stacked: true,
+		},
+		plotOptions: {
+				bar: {
+						horizontal: true,
+				},
+		},
+		stroke: {
+				width: 0,
+				colors: ['#F7D198']
+		},
+
+		series: [{
+				name: 'Current Income',
+				colors: ['#B8B8B8'],
+				data: [estimated_income]
+		},{
+				name: 'Additional Income',
+				fill: ['#2F80ED'],
+				colors: ['#2F80ED'],
+				data: [tab]
+		}],
+		xaxis: {
+				categories: ["Income"],
+				labels: {
+						formatter: function(val) {
+								return val 
+						}
+				}
+		},
+		yaxis: {
+				title: {
+						text: undefined
+				},	
+		},
+		tooltip: {
+				y: {
+						formatter: function(val) {
+						return val	
+				}
+				}
+		},
+		fill: {
+				opacity: 1,
+				colors: ['#B8B8B8', '#2F80ED']
+		},
+		legend: {
+				position: 'top',
+				horizontalAlign: 'left',
+				offsetX: 40,
+				colors: ['#B8B8B8', '#2F80ED'],
+		}
+}
+var chart = new ApexCharts(
+		document.querySelector("#chart"),
+		options
+);
+
+chart.render();
+
+			// 
+				return false;
 
     }
 }
@@ -155,6 +229,9 @@ function handleClickPrevious() {
 	q--;
 	if (q < qMax-1) {
 		$('#btnNext').html('Next');
+	}
+	if (q < qMax) {
+		$('#chart').hide();
 	}
 }
 		
