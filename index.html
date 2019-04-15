@@ -33,9 +33,10 @@
 	<form id="myForm">
 	  <div class="form-group"> 
      
-      <div class="group">
+      <div class="group dropdown">
         <label for="marital-status"> What is your marital status? </label>
-          <select name="marital-status" id="marital-status"> <br/>
+        <br>  
+        <select name="marital-status" id="marital-status"> <br/>
               <option value="Single">Single</option>
               <option value="Married">Married</option>
               <option value="Divorced">Divorced</option>
@@ -47,7 +48,8 @@
   <!-- Parseint will treat "6+" as 6 -->
       <div class="group">
         <label for="vol-child">How many children do you have?</label>
-          <select name="vol-child" id="vol-child"> <br/>
+        <br> 
+        <select name="vol-child" id="vol-child"> <br/>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -61,7 +63,8 @@
 
       <div class="group">
           <label for="age-child">Age of youngest child</label>
-            <select name="age-child" id="age-child"> <br/>
+          <br>  
+          <select name="age-child" id="age-child"> <br/>
               <option value="0-1">0-1</option>
               <option value="1-4">2-4</option>
               <option value="5-10">5-10</option>
@@ -75,7 +78,8 @@
 
       <div class="group">
           <label for="household-size">How many people live in your household?</label>
-            <select name="household-size" id="household-size"> <br/>
+          <br>  
+          <select name="household-size" id="household-size"> <br/>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -90,9 +94,10 @@
       </div>
 
 
-      <div class="group">
+      <div class="group ">
           <label for="estimated-income">Estimated monthly household income:</label>
-            <select name="estimated-income" id="estimated-income"> <br/>
+          <br>  
+          <select name="estimated-income" id="estimated-income"> <br/>
               <option value=125>0-125</option>
               <option value=250>125-250</option>
               <option value=375>250-375</option>
@@ -123,7 +128,8 @@
       <!-- Asset comes with 5,000 threshold and 15,000 deductible-->
       <div class="group">
         <label for="asset">Estimated value of your car plus bank account?</label>
-            <select name="asset" id="asset"> <br/>
+        <br>    
+        <select name="asset" id="asset"> <br/>
               <option value="Less then 20,000">Less then 20,000</option>
               <option value="More then 20,000">More then 20,000</option>
             </select><br/><br/>
@@ -133,7 +139,8 @@
 
       <div class="group">
         <label for="housing-status">What type of housing do you live in?</label>
-          <select name="housing-status" id="housing-status"> <br/>
+        <br> 
+        <select name="housing-status" id="housing-status"> <br/>
             <option value="Owned">Owned</option>
             <option value="Rental">Rental</option>
             <option value="Subsidized">Subsidized</option>
@@ -143,6 +150,7 @@
 
       <div class="group">
         <label for="disability">Does anyone in the household have a disability?</label>
+        <br>
         <select name="disability" id="disability"> <br/>
           <option value="Disabled">Yes</option>
           <option value="Not-disabled">No</option>
@@ -155,15 +163,12 @@
     
     <div id="button_wrapper">
       <button id="btnNext" class="btn btn-primary" type="submit"><i></i><i></i></button>
-
+      <button id="btnPrevious" class="btn btn-primary " type="submit"> <i></i><i></i> </button>
     </div><br/>
 
     <!-- PREVIOUS BUTTON-->
 
-    <div>
-      <button id="btnPrevious"  class="btn btn-primary " type="submit"> <i></i><i></i> </button>
-    </div>
-
+   
   </form>
   <br/>
 

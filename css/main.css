@@ -11,7 +11,12 @@ button {
     margin: -20px -50px; 
     top:50%; 
     left:50%;
-  
+  }
+
+.btn  {
+    -webkit-appearance: none;
+    position:relative; 
+
   }
   
 
@@ -107,10 +112,8 @@ button{
  color: #00637C;
 }
 
- 
 .wrapper {
  max-width: 1000px;
  margin: 4em auto;
  font-size: 12px;
 }
- 
