@@ -1,1 +1,116 @@
 /** CUSTOM STYLES **/
+
+button {
+    -webkit-appearance: none;
+    position:relative; 
+    background: transparent;
+    border: 0;
+    outline: 0;
+    height:35px; 
+    position:relative; 
+    margin: -20px -50px; 
+    top:50%; 
+    left:50%;
+  
+  }
+  
+
+.form-group {
+    text-align: center;
+  }
+
+#wrapper{
+    width:100%; 
+    height:400px; 
+    border:1px solid black;
+}
+/*
+button{
+    height:35px; 
+    position:relative; 
+    margin: -20px -50px; 
+    width:100px; 
+    top:50%; 
+    left:50%;
+}
+  
+/*Downloaded from https://www.codeseek.co/BuddyLReno/dot-check-progress-bar-NNojRP */
+.ProgressBar {
+ margin: 0 auto;
+ padding: 2em 0 3em;
+ list-style: none;
+ position: relative;
+ display: flex;
+ justify-content: space-between;
+}
+
+.ProgressBar-step {
+ text-align: center;
+ position: relative;
+ width: 100%;
+}
+.ProgressBar-step:before, .ProgressBar-step:after {
+ content: "";
+ height: 0.5em;
+ background-color:  rgb(255, 241, 183);
+ position: absolute;
+ z-index: 1;
+ width: 100%;
+ left: -50%;
+ top: 50%;
+ -webkit-transform: translateY(-50%);
+         transform: translateY(-50%);
+ transition: all .25s ease-out;
+}
+.ProgressBar-step:first-child:before, .ProgressBar-step:first-child:after {
+ display: none;
+}
+.ProgressBar-step:after {
+ background-color: rgb(247, 209, 52);
+ width: 0%;
+}
+.ProgressBar-step.is-complete + .ProgressBar-step.is-current:after, .ProgressBar-step.is-complete + .ProgressBar-step.is-complete:after {
+ width: 100%;
+}
+
+.ProgressBar-icon {
+ width: 1.5em;
+ height: 1.5em;
+ background-color: rgb(255, 241, 183);
+ fill: rgb(255, 241, 183);
+ border-radius: 50%;
+ padding: 0.5em;
+ max-width: 100%;
+ z-index: 10;
+ position: relative;
+ transition: all .25s ease-out;
+}
+.is-current .ProgressBar-icon {
+ fill: #00637C;
+ background-color: #00637C;
+}
+.is-complete .ProgressBar-icon {
+ fill: #DBF1FF;
+ background-color: rgb(247, 209, 52);;
+}
+
+.ProgressBar-stepLabel {
+ display: block;
+ text-transform: uppercase;
+ color: #9F9FA3;
+ position: absolute;
+ padding-top: 0.5em;
+ width: 100%;
+ transition: all .25s ease-out;
+}
+.is-current > .ProgressBar-stepLabel, .is-complete > .ProgressBar-stepLabel {
+ color: #00637C;
+}
+
+ 
+.wrapper {
+ max-width: 1000px;
+ margin: 4em auto;
+ font-size: 12px;
+}
+ 
