@@ -15,5 +15,10 @@ MDE Studio 3 - Nudge+
 --Edge cases: 
 -- -- what will happen in max child count/income/household count senario? How will the values be passed and processed?
 
+#Begin Page & Progress Bar
+-- The progress bar currently begins at 0, and progresses with a lag of one answer.
+-- Creating a 'Begin' Page before the  questions start, and label that button 'nxtbutton' which would help move the progress bar up once and begin at the right moment. 
+-- A begin page would also be a better UX. 
+
 #Tips
 --Hold option + command + up/down for multiple rows editing
