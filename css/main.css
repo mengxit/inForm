@@ -1,6 +1,6 @@
-/** CUSTOM STYLES **/
 
-button {
+
+/*button {
     -webkit-appearance: none;
     position:relative; 
     background: transparent;
@@ -11,7 +11,24 @@ button {
     margin: -20px -50px; 
     top:50%; 
     left:50%;
+  }*/
+
+  /*i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
   }
+  
+  #btnNext{
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  #btnPrevious{
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }*/
 
 .btn  {
     -webkit-appearance: none;

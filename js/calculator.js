@@ -51,8 +51,10 @@ function handleClick() {
     if (q < qMax) {
         $('#myForm div.group:nth-child(' + q + ')').hide();
         $('#myForm div.group:nth-child(' + (q + 1) + ')').show();
-        if (q == (qMax - 1)) {
-            $('#btnNext').html('Submit Answers');
+	
+
+		if (q == (qMax - 1)) {
+            $('#btnNext').html('Find Out Your Benefits！');
 		}
         q++;
     } else {
@@ -151,8 +153,8 @@ function handleClickPrevious() {
         $('#myForm div.group:nth-child(' + (q - 1) + ')').show();
     } 
 	q--;
-	if (q < qMax) {
-		$('#btnNext').html('');
+	if (q < qMax-1) {
+		$('#btnNext').html('Next');
 	}
 }
 		
