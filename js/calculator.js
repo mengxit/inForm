@@ -449,7 +449,7 @@ function mliheap(estimated_income, household_size, housing_status){
 		}
 	}
 
-	}
+	
 
 	mliheap_val =
 	{
