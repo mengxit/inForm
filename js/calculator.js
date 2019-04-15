@@ -81,11 +81,17 @@ function handleClick() {
    // Get HIP value
    var hip_val =  hip(snap_high_bound, household_size);
    console.log(hip_val); 
+   //PRINT HIP value
+   if (hip_val.hip_high_bound != 0 ){
+   $('#hip_result').text("HIP : Your potential benefit is $" + hip_val);
+   }
 
    //Get WIC value
-   var wic_val = wic(estimated_income, household_size, age_child);
+   var wic_val = wic(vol_child, estimated_income, household_size, age_child);
   //Print WIC value 
+  if (wic_val != "Disqualified" ){
    $('#wic_result').text("WIC : " + wic_val);
+  }
 
 
   // Get MRVP value 
@@ -94,26 +100,32 @@ function handleClick() {
   // MRVP bounds
    var mrvp_high_bound = mrvp_val.high_bound;
    var mrvp_low_bound = mrvp_val.low_bound;
-  
+
+   if (mrvp_high_bound != 0){
    $('#mrvp_result').text("MRVP: Your potential benefit range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
-		
+   }
 
   // Get TAFDC value 
 	var tafdc_val = tafdc(estimated_income, household_size, age_child,  asset_value, housing_status);
   // Print TAFDC value 
-	$('#tafdc_result').text("TAFDC Range is :  $ " + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
-
+  if (tafdc_val.tafdc_high_bound != 0){
+	$('#tafdc_result').text("TAFDC: Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
+  }
 
 	// Get MLIHEAP value 
 	  var mliheap_val = mliheap(estimated_income, household_size, housing_status);
-	// Print MLIHEAP value 
-	$('#mliheap_result').text("MLIHEAP Range is :  $ " + parseInt(mliheap_val.mliheap_low_bound) + " and $ " + parseInt(mliheap_val.mliheap_high_bound));
+
+	// Print MLIHEAP value
+	if (mliheap_val.mliheap_high_bound != 0 ){
+	$('#mliheap_result').text("MLIHEAP: Your potential benefit range is between: $" + parseInt(mliheap_val.mliheap_low_bound) + " and $ " + parseInt(mliheap_val.mliheap_high_bound));
+	}
 
 	// Get MEITC value 
 		var meitc_val = meitc(marital_status, estimated_income, vol_child);
 	// Print MEITC value 
-		$('#meitc_result').text("MEITC Range is :  $ " + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
-			
+	if (meitc_val.meitc_high_bound != 0 ){
+		$('#meitc_result').text("MEITC: Your potential benefit range is between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
+	}	
 		
 		return false;
 
@@ -146,22 +158,21 @@ function earned_income(marital_status, vol_child, estimated_income){
 
 function snap(estimated_income, household_size){
 	//NEED TO UPDATE QUESTION TO INCLUDE MONTHLY INCOME NOT YEARLY & CONVERT TO INT
-	var low_bound = 1;
-	var high_bound = 1;
-	var snap_Max = ["192",	"352",	"504",	"640",	"760",	"913",	"1009",	"1153",	"1297",	"1441",];
+	var low_bound = 0; 
+	var high_bound = 0;
+	var snap_Max = ["15",  "192", "352",	"504",	"640",	"760",	"913",	"1009",	"1153",	"1297",	"1441",];
 	var IncomeArray = ["2023","2743","3463","4183","4903","5623","6343","7603","8347","9091"];
 	var HouseholdMax = 10;
     for (var i = 0; i < HouseholdMax; i++) {
         if(parseInt(household_size - 1) ==i) {
         	if(parseInt(estimated_income)<=parseInt(IncomeArray[i])){
 				// Set high bound to equal to snap_Max array location.
-				high_bound=snap_Max[i];
-				// Set low bound to next lowest location in snap_max array. 
-				if(i!=0){
-					low_bound=snap_Max[i-1];	}
+				high_bound=snap_Max[i+1];
+				low_bound=snap_Max[i];
+				}
         	}
         }
-    }
+    
     return {
 		low_bound: low_bound,
 		high_bound: high_bound
@@ -183,13 +194,25 @@ function hip(snap_val, household_size){
 
 //WIC CALCULATION
 
-function wic(estimated_income, household_size, age_child){
-	var wic_val = 0;
+function wic(vol_child, estimated_income, household_size, age_child){
+
+
 	var IncomeArray = ["1872","2538","3204","3870","4536","5202","5868","6534","7200","7866"];
 	var HouseholdMax = 10;
+
+	var wic_val = "Disqualified";
+
+	console.log("wic vol_child:" + vol_child);
+	console.log("age_child:" + (age_child));
+
     for (var i = 0; i < HouseholdMax; i++) {
         if(parseInt(household_size - 1) == i) {
         	if(parseInt(estimated_income) <= parseInt(IncomeArray[i])){
+				//console.log("vol_child:" + (vol_child));
+
+				if(parseInt(vol_child) != 0){
+
+
 				if(age_child == "0-1")
 				{
 					wic_val = "You qualify for both infant and mother food package."
@@ -202,12 +225,15 @@ function wic(estimated_income, household_size, age_child){
 				{
 					wic_val = "You qualify for mother food package."
 				}
+			}
         	}
 
         }
     }
     return wic_val
 }
+
+//MRVP CALCULATION FUNCTION
 
 function rental_voucher(estimated_income, household_size, vol_child){
 
@@ -225,6 +251,8 @@ function rental_voucher(estimated_income, household_size, vol_child){
 	estimated_income = parseInt(estimated_income);
 	household_size = parseInt(household_size);
 	vol_child = parseInt(vol_child);
+
+	console.log("MRVP vol_child:" + vol_child);
 
 
 
@@ -276,7 +304,7 @@ function rental_voucher(estimated_income, household_size, vol_child){
 	// If current room size = 1, lower bound = 0. 
 
 	if(vol_room < 2){
-		low_bound = 0;
+		low_bound = 1;
 	}
 	else {
 		low_bound = voucher[vol_room-2][ArrayLoc];
