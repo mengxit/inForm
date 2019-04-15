@@ -6,7 +6,7 @@
 
 
 //initialize counter. q: current question, qMax: total question count
-var q = 1, qMax = 0;
+var q = 1, qMax = 0, index =0;
 
 //active click funtions once whole page finishes loading
 $(document).ready(function() {
@@ -19,20 +19,31 @@ $(document).ready(function() {
 
     //calling handClick when clicking "next" button
     $('#btnNext').on('click', function (event) {
-        event.preventDefault();
+		var $bar = $(".ProgressBar");
+		if ($bar.children(".is-current").length >0) {
+		$bar.children(".is-current").removeClass("is-current").addClass("is-complete").next().addClass("is-current");
+		} else {
+		$bar.children().first().addClass("is-current");
+		}
+		event.preventDefault();
         handleClick();
     });
     
     //calling handClickPrevious when clicking "previous" button
     $('#btnPrevious').on('click', function (event) {
-        event.preventDefault();
+		
+		// Button slider
+		var $bar = $(".ProgressBar");
+		if ($bar.children(".is-current").length > 0) {
+		$bar.children(".is-current").removeClass("is-current").prev().removeClass("is-complete").addClass("is-current");
+		} else {
+		$bar.children(".is-complete").last().removeClass("is-complete").addClass("is-current");
+		}
+		event.preventDefault();
         handleClickPrevious();
-    });
-
-});
-
-// Another comment
-
+	
+	});
+ });
 
 //handling next button and submission
 
@@ -141,7 +152,7 @@ function handleClickPrevious() {
     } 
 	q--;
 	if (q < qMax) {
-		$('#btnNext').html('Next');
+		$('#btnNext').html('');
 	}
 }
 		
@@ -435,7 +446,9 @@ function mliheap(estimated_income, household_size, housing_status){
 				}
 
 			}	
+		}
 	}
+
 	}
 
 	mliheap_val =
