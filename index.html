@@ -15,16 +15,17 @@
     <title>Nudger: A Benefit Calculator</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-cleaned.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/main.css" rel="stylesheet">
+
   </head>
 
   <body>
 
     <!-- Image and text -->
-<nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">
       <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="40" height="30" class="d-inline-block align-top" alt="">
       Bootstrap
@@ -171,9 +172,9 @@
      
     <!-- NEXT BUTTON-->
     
-    <div id="button_wrapper">
-      <button id="btnNext" class="btn btn-primary" type="submit"><i></i><i></i></button>
-      <button id="btnPrevious" class="btn btn-primary " type="submit"> <i></i><i></i> </button>
+    <div id="button_wrapper" style="text-align:center;">
+      <button id="btnPrevious" class="btn btn-primary " type="submit">Previous</button> &nbsp;&nbsp;
+      <button id="btnNext" class="btn btn-primary" type="submit">Next</button>
     </div><br/>
 
     <!-- PREVIOUS BUTTON-->
@@ -239,7 +240,10 @@
   <!-- ADD HOVEROVER FUNCTIONALITY-->
   
   
-    <h2>Benefit Range</h2>
+  <div style="text-align:center;">
+
+  <h2>Benefit Range</h2>
+
 
   <div id="snap_result"></div>
   <div id="wic_result"></div>
@@ -248,6 +252,8 @@
   <div id="mliheap_result"></div>
   <div id="meitc_result"></div>
   <div id="hip_result"></div>
+
+  </div>
 
 
 
