@@ -4,6 +4,7 @@ MDE Studio 3 - Nudge+
 #Features to Dev
 --Review form before submission
 --Form percentage progress (as in figma) 
+--Send different message if does not qualify, or if none of benefits is qualified
 
 #Algorithm Enhancement
 --Make the outputs a range (Min - Max), maybe retrieve Array[i] and Array[i + 1]
