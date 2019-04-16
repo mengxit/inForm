@@ -8,6 +8,9 @@
 //initialize counter. q: current question, qMax: total question count
 var q = 1, qMax = 0, index =0;
 
+// A persistent unique id for the user.
+var uid = getUniqueId();
+
 //active click funtions once whole page finishes loading
 $(document).ready(function() {
 
@@ -92,10 +95,10 @@ function handleClick() {
 
 
    // Get HIP value
-   var hip_val =  hip(snap_high_bound, household_size);
+   var hip_val =  parseInt(hip(snap_high_bound, household_size));
    console.log(hip_val); 
    //PRINT HIP value
-   if (hip_val.hip_high_bound != 0 ){
+   if (hip_val != 0 ){
    $('#hip_result').text("HIP : Your potential benefit is $" + hip_val);
    }
 
@@ -139,7 +142,13 @@ function handleClick() {
 	if (meitc_val.meitc_high_bound != 0 ){
 		$('#meitc_result').text("MEITC: Your potential benefit range is between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
 	}	
-		
+
+	//////Log to Google Form
+	sendNetworkLog(
+		uid,
+		snap_low_bound,
+		snap_high_bound)
+
 		return false;
 
     }
@@ -524,3 +533,42 @@ function meitc(marital_status, estimated_income, vol_child){
 	
 }
 
+/////////LOGGING//////
+
+// Genrates or remembers a somewhat-unique ID with distilled user-agent info.
+function getUniqueId() {
+	if (!('uid' in localStorage)) {
+	  var browser = findFirstString(navigator.userAgent, [
+		'Seamonkey', 'Firefox', 'Chromium', 'Chrome', 'Safari', 'OPR', 'Opera',
+		'Edge', 'MSIE', 'Blink', 'Webkit', 'Gecko', 'Trident', 'Mozilla']);
+	  var os = findFirstString(navigator.userAgent, [
+		'Android', 'iOS', 'Symbian', 'Blackberry', 'Windows Phone', 'Windows',
+		'OS X', 'Linux', 'iOS', 'CrOS']).replace(/ /g, '_');
+	  var unique = ('' + Math.random()).substr(2);
+	  localStorage['uid'] = os + '-' + browser + '-' + unique;
+	}
+	return localStorage['uid'];
+  }
+  
+
+function sendNetworkLog(
+    uid,
+    snap_low_bound,
+    snap_high_bound) {
+  var formid = "e/1FAIpQLSdEwbpIjip3i6sooG23jF4sdFPlyhwmh_u9QAyBrYch2yOAkQ";
+  var data = {
+    "entry.1864552612": uid,
+    "entry.1012897442": snap_low_bound,
+    "entry.2009640771": snap_high_bound
+  };
+
+  console.log("UID is: " + uid);
+
+  var params = [];
+  for (key in data) {
+    params.push(key + "=" + encodeURIComponent(data[key]));
+  }
+  // Submit the form using an image to avoid CORS warnings.
+  (new Image).src = "https://docs.google.com/forms/d/" + formid +
+     "/formResponse?" + params.join("&");
+}
