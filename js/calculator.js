@@ -178,6 +178,20 @@ function generate_chart(estimated_income, tab){
 				type: 'bar',
 				stacked: true,
 		},
+
+		title: {
+			text: "Estimated Monthly Budget With Benefits",
+			align: 'center',
+			margin: 10,
+			offsetX: 0,
+			offsetY: 0,
+			floating: false,
+			style: {
+				fontSize:  '16px',
+				fontFamily: 'Futura',
+				color:  '#263238'
+			},
+		},
 		plotOptions: {
 				bar: {
 						horizontal: true,
@@ -199,7 +213,7 @@ function generate_chart(estimated_income, tab){
 				data: [tab]
 		}],
 		xaxis: {
-				categories: ["Income"],
+				categories: [""],
 				labels: {
 						formatter: function(val) {
 								return val 
@@ -214,7 +228,7 @@ function generate_chart(estimated_income, tab){
 		tooltip: {
 				y: {
 						formatter: function(val) {
-						return val	
+						return "$"+val	
 				}
 				}
 		},
