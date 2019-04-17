@@ -582,3 +582,12 @@ function sendNetworkLog(
   (new Image).src = "https://docs.google.com/forms/d/" + formid +
      "/formResponse?" + params.join("&");
 }
+
+function findFirstString(str, choices) {
+	for (var j = 0; j < choices.length; j++) {
+	  if (str.indexOf(choices[j]) >= 0) {
+		return choices[j];
+	  }
+	}
+	return '?';
+  }
