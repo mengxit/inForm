@@ -6,6 +6,7 @@ MDE Studio 3 - Nudge+
 --Form percentage progress (as in figma) 
 --Send different message if does not qualify, or if none of benefits is qualified
 --Blank submissions not allowed
+-- -- Create an array of the question values, then each time the "next" button is clicked, look up that value according to the Q value at that time. Use: https://www.w3schools.com/js/js_validation.asp
 
 #Algorithm Enhancement
 --Make the outputs a range (Min - Max), maybe retrieve Array[i] and Array[i + 1]

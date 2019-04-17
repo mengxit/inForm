@@ -52,7 +52,9 @@ $(document).ready(function() {
 
 function handleClick() {
 	  console.log("q:" + q + " qmax:" + qMax)
-    if (q < qMax) {
+		// LOCATION FOR NULL VALUE WARNING 
+		
+		if (q < qMax) {
         $('#myForm div.group:nth-child(' + q + ')').hide();
         $('#myForm div.group:nth-child(' + (q + 1) + ')').show();
 	
