@@ -8,6 +8,9 @@
 //initialize counter. q: current question, qMax: total question count
 var q = 1, qMax = 0, index =0;
 
+// A persistent unique id for the user.
+var uid = getUniqueId();
+
 //active click funtions once whole page finishes loading
 $(document).ready(function() {
 
@@ -100,7 +103,7 @@ function handleClick() {
    //PRINT HIP value
    if (hip_val!= 0 ){
    $('#hip_result').text("Health Food Program (HIP): Your potential benefit is $" + hip_val);
-   }
+    }
 
    //Get WIC value
 	 var wic_val = wic(vol_child, estimated_income, household_size, age_child);
@@ -152,7 +155,15 @@ function handleClick() {
 	console.log(tab)
 	generate_chart(estimated_income, tab)
 	// INCOME BAR GRAPH 
-	}
+
+	//////Log to Google Form
+	sendNetworkLog(
+		uid,
+		snap_low_bound,
+		snap_high_bound)
+
+		return false;
+    }
 }
 
 //handling "previous" button
@@ -627,3 +638,61 @@ function meitc(marital_status, estimated_income, vol_child){
 	
 }
 
+/////////LOGGING//////
+
+// Genrates or remembers a somewhat-unique ID with distilled user-agent info.
+function getUniqueId() {
+	if (!('uid' in localStorage)) {
+	  var browser = findFirstString(navigator.userAgent, [
+		'Seamonkey', 'Firefox', 'Chromium', 'Chrome', 'Safari', 'OPR', 'Opera',
+		'Edge', 'MSIE', 'Blink', 'Webkit', 'Gecko', 'Trident', 'Mozilla']);
+	  var os = findFirstString(navigator.userAgent, [
+		'Android', 'iOS', 'Symbian', 'Blackberry', 'Windows Phone', 'Windows',
+		'OS X', 'Linux', 'iOS', 'CrOS']).replace(/ /g, '_');
+	  var unique = ('' + Math.random()).substr(2);
+	  localStorage['uid'] = os + '-' + browser + '-' + unique;
+	}
+	return localStorage['uid'];
+  }
+
+
+  function findFirstString(str, choices) {
+	for (var j = 0; j < choices.length; j++) {
+	  if (str.indexOf(choices[j]) >= 0) {
+		return choices[j];
+	  }
+	}
+	return '?';
+  }
+  
+
+function sendNetworkLog(
+    uid,
+    snap_low_bound,
+    snap_high_bound) {
+  var formid = "e/1FAIpQLSdEwbpIjip3i6sooG23jF4sdFPlyhwmh_u9QAyBrYch2yOAkQ";
+  var data = {
+    "entry.1864552612": uid, //the answer entry id in Google form
+    "entry.1012897442": snap_low_bound,
+    "entry.2009640771": snap_high_bound
+  };
+
+  console.log("UID is: " + uid);
+
+  var params = [];
+  for (key in data) {
+    params.push(key + "=" + encodeURIComponent(data[key]));
+  }
+  // Submit the form using an image to avoid CORS warnings.
+  (new Image).src = "https://docs.google.com/forms/d/" + formid +
+     "/formResponse?" + params.join("&");
+}
+
+function findFirstString(str, choices) {
+	for (var j = 0; j < choices.length; j++) {
+	  if (str.indexOf(choices[j]) >= 0) {
+		return choices[j];
+	  }
+	}
+	return '?';
+  }
