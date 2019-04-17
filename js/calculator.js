@@ -88,7 +88,7 @@ function handleClick() {
 	var snap_val = snap(estimated_income, household_size);
 	var snap_high_bound = parseInt(snap_val.high_bound);
 	var snap_low_bound = parseInt(snap_val.low_bound);
-	$('#snap_result').text("SNAP: Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
+	$('#snap_result').text("Food Benefits (SNAP): Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
 
 
    // Get HIP value
@@ -97,14 +97,14 @@ function handleClick() {
    console.log(hip_val); 
    //PRINT HIP value
    if (hip_val!= 0 ){
-   $('#hip_result').text("HIP : Your potential benefit is $" + hip_val);
+   $('#hip_result').text("Health Food Program (HIP): Your potential benefit is $" + hip_val);
    }
 
    //Get WIC value
 	 var wic_val = wic(vol_child, estimated_income, household_size, age_child);
   //Print WIC value 
   if (wic_val != "Disqualified" ){
-   $('#wic_result').text("WIC : " + wic_val);
+   $('#wic_result').text("Women, Infant & Children care (WIC): " + wic_val);
   }
 
 
@@ -116,7 +116,7 @@ function handleClick() {
    var mrvp_low_bound = parseInt(mrvp_val.low_bound);
 
    if (mrvp_high_bound != 0){
-   $('#mrvp_result').text("MRVP: Your potential benefit range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
+   $('#mrvp_result').text("Rental Assistance (MRVP): Your potential voucher range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
    }
 
   // Get TAFDC value 
@@ -124,15 +124,16 @@ function handleClick() {
 	var tafdc_high_bound = parseInt(tafdc_val.tafdc_high_bound);
 	// Print TAFDC value 
   if (tafdc_high_bound != 0){
-	$('#tafdc_result').text("TAFDC: Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
+	$('#tafdc_result').text("Transitional Aid: (TAFDC) Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
   }
 
 	// Get MLIHEAP value 
 	var mliheap_val = mliheap(estimated_income, household_size, housing_status);
 	var mliheap_high_bound = parseInt(mliheap_val.mliheap_high_bound);
+	var mliheap_low_bound = parseInt(mliheap_val.mliheap_low_bound);
 	// Print MLIHEAP value
 	if (mliheap_high_bound != 0 ){
-	$('#mliheap_result').text("MLIHEAP: Your potential benefit range is between: $" + parseInt(mliheap_val.mliheap_low_bound) + " and $ " + parseInt(mliheap_val.mliheap_high_bound));
+	$('#mliheap_result').text("Energy & Heat (MLIHEAP): Your potential benefit range is between: $" + mliheap_low_bound + " and $ " + mliheap_high_bound);
 	}
 
 	// Get MEITC value 
@@ -140,15 +141,37 @@ function handleClick() {
 	// Print MEITC value 
 	var meitc_high_bound = parseInt(meitc_val.meitc_high_bound);
 	if (meitc_high_bound != 0 ){
-		$('#meitc_result').text("MEITC: Your potential benefit range is between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
+		$('#meitc_result').text("Income Tax Credit (MEITC): You may be eligble for between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
 	}	
 	
 	// Adding "total additional benefits" to be fed into the chart as "additional" value.
-	var tab = parseInt(snap_high_bound) + parseInt(hip_val) + parseInt(mrvp_high_bound) + tafdc_val.tafdc_high_bound + mliheap_val.mliheap_high_bound + meitc_val.meitc_high_bound; 
+	var tab = parseInt(snap_high_bound) + parseInt(hip_val) + parseInt(mrvp_high_bound) + parseInt(tafdc_val.tafdc_high_bound) + parseInt(mliheap_val.mliheap_high_bound) + parseInt(meitc_val.meitc_high_bound); 
 	
 	console.log(tab)
+	generate_chart(estimated_income, tab)
 	// INCOME BAR GRAPH 
+		}
+}
 
+//handling "previous" button
+
+function handleClickPrevious() {
+	if ((q <= qMax) && (q > 1)) {
+			$('#myForm div.group:nth-child(' + q + ')').hide();
+			$('#myForm div.group:nth-child(' + (q - 1) + ')').show();
+	} 
+	q--;
+	if (q < qMax-1) {
+		$('#btnNext').html('Next');
+	}
+	if (q < qMax) {
+		$('#chart').hide();
+	}
+}
+	
+function generate_chart(estimated_income, tab){
+	estimated_income = parseInt(estimated_income);
+	tab = parseInt(tab);
 	var options = {
 		chart: {
 				height: 150,
@@ -210,37 +233,20 @@ var chart = new ApexCharts(
 		document.querySelector("#chart"),
 		options
 );
-
-chart.render();
-
-			// 
-				return false;
-
+//chart.destroy();
+	if(isNaN(estimated_income)){
+		chart.destroy();
+		return false;
+	}
+	else{
+		chart.render();
+		return false;
     }
-}
-
-//handling "previous" button
-
-function handleClickPrevious() {
-    if ((q <= qMax) && (q > 1)) {
-        $('#myForm div.group:nth-child(' + q + ')').hide();
-        $('#myForm div.group:nth-child(' + (q - 1) + ')').show();
-    } 
-	q--;
-	if (q < qMax-1) {
-		$('#btnNext').html('Next');
 	}
-	if (q < qMax) {
-		$('#chart').hide();
-	}
-}
-		
 
 function earned_income(marital_status, vol_child, estimated_income){
-
 	var add = (parseInt(vol_child) + parseInt(estimated_income))
 	return add;
-
 }
 
 

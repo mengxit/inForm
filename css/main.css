@@ -32,7 +32,30 @@
 
   @import url(https://fonts.googleapis.com/css?family=Roboto);
 
-  body {
+  .group{
+    position: relative;
+    width: 50%;
+    height: 50%;
+    left: 25%;
+    right: 30%;
+    font-family: Futura;
+    font-size: 15px;
+    line-height: normal;
+    text-align: center;
+    color: #000000;
+    text-align: center;
+    padding: 2em 0 0;
+  }
+
+  .title{
+    font-family: Futura;
+  }
+/*
+  .form-group {
+    text-align: center;
+  }
+*/ 
+  .body {
     font-family: Roboto, sans-serif;
   }
   
@@ -44,17 +67,12 @@
 .btn  {
     -webkit-appearance: none;
     position:relative; 
-
   }
   
 
-.form-group {
-    text-align: center;
-  }
-
 #wrapper{
     width:100%; 
-    height:40px; 
+    height:10px; 
     border:1px solid black;
 }
 /*
@@ -70,11 +88,19 @@ button{
 /*Downloaded from https://www.codeseek.co/BuddyLReno/dot-check-progress-bar-NNojRP */
 .ProgressBar {
  margin: 0 auto;
- padding: 2em 0 0;
+ padding: 0em 0 0;
  list-style: none;
  position: relative;
  display: flex;
  justify-content: space-between;
+ width: 50%;
+ height: 50%;
+ left: 0%;
+ top: 0%;
+ line-height: normal;
+ text-align: center;
+ color: #000000;
+ text-align: center;
 }
 
 .ProgressBar-step {
@@ -141,7 +167,7 @@ button{
 }
 
 .wrapper {
- max-width: 1000px;
- margin: 4em auto 0em;
+ max-width: 500px;
+ margin: 0 auto 0;
  font-size: 12px;
 }
