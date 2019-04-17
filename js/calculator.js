@@ -48,6 +48,7 @@ $(document).ready(function() {
 //handling next button and submission
 
 function handleClick() {
+	  console.log("q:" + q + " qmax:" + qMax)
     if (q < qMax) {
         $('#myForm div.group:nth-child(' + q + ')').hide();
         $('#myForm div.group:nth-child(' + (q + 1) + ')').show();
@@ -58,7 +59,8 @@ function handleClick() {
 		}
         q++;
     } else {
-		
+			$('#chart').show();
+
 		// get value of all input fields needed 
 		// store into variables
 		var marital_status = $('#marital-status').val();
@@ -150,7 +152,7 @@ function handleClick() {
 	console.log(tab)
 	generate_chart(estimated_income, tab)
 	// INCOME BAR GRAPH 
-		}
+	}
 }
 
 //handling "previous" button
@@ -159,7 +161,10 @@ function handleClickPrevious() {
 	if ((q <= qMax) && (q > 1)) {
 			$('#myForm div.group:nth-child(' + q + ')').hide();
 			$('#myForm div.group:nth-child(' + (q - 1) + ')').show();
+			$('#chart').show();
+
 	} 
+	
 	q--;
 	if (q < qMax-1) {
 		$('#btnNext').html('Next');
@@ -201,17 +206,18 @@ function generate_chart(estimated_income, tab){
 				width: 0,
 				colors: ['#F7D198']
 		},
-
 		series: [{
-				name: 'Current Income',
-				colors: ['#B8B8B8'],
-				data: [estimated_income]
-		},{
-				name: 'Additional Income',
-				fill: ['#2F80ED'],
-				colors: ['#2F80ED'],
-				data: [tab]
-		}],
+			name: 'Current Income',
+			// colors: ['#FF0000'],
+			data: [estimated_income]
+	},{
+			name: 'Additional Income',
+			// fill: ['#2F80ED'],
+			// colors: ['#2F80ED'],
+			data: [tab]
+	}],
+	colors: ['#B8B8B8', '#2F80ED'],
+
 		xaxis: {
 				categories: [""],
 				labels: {
@@ -232,17 +238,16 @@ function generate_chart(estimated_income, tab){
 				}
 				}
 		},
-		fill: {
-				opacity: 1,
-				colors: ['#B8B8B8', '#2F80ED']
-		},
 		legend: {
 				position: 'top',
 				horizontalAlign: 'left',
-				offsetX: 40,
-				colors: ['#B8B8B8', '#2F80ED'],
-		}
+				offsetX: 40
+			}
+
+		
 }
+
+$("#chart").html("")
 var chart = new ApexCharts(
 		document.querySelector("#chart"),
 		options
@@ -253,6 +258,7 @@ var chart = new ApexCharts(
 		return false;
 	}
 	else{
+		console.log("Rendering")
 		chart.render();
 		return false;
     }
