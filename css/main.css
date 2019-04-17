@@ -32,6 +32,12 @@
 
   @import url(https://fonts.googleapis.com/css?family=Roboto);
 
+  .disclaimer{
+    font-family: Futura;
+    font-size: 10px;
+    color: #B8b8b8;
+    text-align: center;
+  }
   .group{
     position: relative;
     width: 50%;
