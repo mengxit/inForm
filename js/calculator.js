@@ -549,6 +549,16 @@ function getUniqueId() {
 	}
 	return localStorage['uid'];
   }
+
+
+  function findFirstString(str, choices) {
+	for (var j = 0; j < choices.length; j++) {
+	  if (str.indexOf(choices[j]) >= 0) {
+		return choices[j];
+	  }
+	}
+	return '?';
+  }
   
 
 function sendNetworkLog(
@@ -557,7 +567,7 @@ function sendNetworkLog(
     snap_high_bound) {
   var formid = "e/1FAIpQLSdEwbpIjip3i6sooG23jF4sdFPlyhwmh_u9QAyBrYch2yOAkQ";
   var data = {
-    "entry.1864552612": uid,
+    "entry.1864552612": uid, //the answer entry id in Google form
     "entry.1012897442": snap_low_bound,
     "entry.2009640771": snap_high_bound
   };
