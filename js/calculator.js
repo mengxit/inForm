@@ -11,6 +11,16 @@ var q = 1, qMax = 0, index =0;
 // A persistent unique id for the user.
 var uid = getUniqueId();
 
+// Get domain name
+var domain_name = window.location.hostname;
+console.log("domain name is:" + domain_name)
+
+// Record the timestamp
+var dt_before = new Date();
+var secondstamp_before = Math.floor(Date.now() / 1000);
+var timestamp_before = dt_before.toUTCString();
+console.log("before:" + timestamp_before);
+
 //active click funtions once whole page finishes loading
 $(document).ready(function() {
 
@@ -130,6 +140,7 @@ function handleClick() {
 		// Get TAFDC value 
 		var tafdc_val = tafdc(estimated_income, household_size, age_child,  asset_value, housing_status);
 		var tafdc_high_bound = parseInt(tafdc_val.tafdc_high_bound);
+		var tafdc_low_bound = parseInt(tafdc_val.tafdc_low_bound);
 		// Print TAFDC value 
 		if (tafdc_high_bound != 0){
 		$('#tafdc_result').text("Transitional Aid: (TAFDC) Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
@@ -148,6 +159,7 @@ function handleClick() {
 		var meitc_val = meitc(marital_status, estimated_income, vol_child);
 		// Print MEITC value 
 		var meitc_high_bound = parseInt(meitc_val.meitc_high_bound);
+		var meitc_low_bound = parseInt(meitc_val.meitc_low_bound);
 		if (meitc_high_bound != 0 ){
 			$('#meitc_result').text("Income Tax Credit (MEITC): You may be eligble for between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
 		}	
@@ -155,16 +167,48 @@ function handleClick() {
 		// Adding "total additional benefits" to be fed into the chart as "additional" value.
 		var tab = parseInt(snap_high_bound) + parseInt(hip_val) + parseInt(mrvp_high_bound) + parseInt(tafdc_val.tafdc_high_bound) + parseInt(mliheap_val.mliheap_high_bound) + parseInt(meitc_val.meitc_high_bound); 
 		
+		// INCOME BAR GRAPH 
 		console.log(tab)
 		$('#chart').show();
 		generate_chart(estimated_income, tab)
-		// INCOME BAR GRAPH 
+
+		// Record timestamp after
+		var dt_after = new Date();
+		var secondstamp_after = Math.floor(Date.now() / 1000);
+		var secondstamp_passed = secondstamp_after - secondstamp_before;
+		var timestamp_after = dt_after.toUTCString();
+		console.log("after:"+ timestamp_after);
+		console.log("timepassed:"+ secondstamp_passed);
+	
 
 		//////Log to Google Form
 		sendNetworkLog(
 			uid,
+			domain_name,
+			timestamp_before,
+			timestamp_after,
+			secondstamp_passed,
+			marital_status,
+			vol_child,
+			age_child,
+			household_size,
+			estimated_income,
+			asset_value,
+			housing_status,
+			disability,
+			snap_high_bound,
 			snap_low_bound,
-			snap_high_bound)
+			hip_val,
+			wic_val,
+			mrvp_high_bound,
+			mrvp_low_bound,
+			tafdc_high_bound,
+			tafdc_low_bound,
+			mliheap_high_bound,
+			mliheap_low_bound,
+			meitc_high_bound,
+			meitc_low_bound,
+			tab)
 
 			return false;
 			}
@@ -673,13 +717,59 @@ function getUniqueId() {
 
 function sendNetworkLog(
     uid,
-    snap_low_bound,
-    snap_high_bound) {
+    domain_name,
+		timestamp_before,
+		timestamp_after,
+		secondstamp_passed,
+		marital_status,
+		vol_child,
+		age_child,
+		household_size,
+		estimated_income,
+		asset_value,
+		housing_status,
+		disability,
+		snap_high_bound,
+		snap_low_bound,
+		hip_val,
+		wic_val,
+		mrvp_high_bound,
+		mrvp_low_bound,
+		tafdc_high_bound,
+		tafdc_low_bound,
+		mliheap_high_bound,
+		mliheap_low_bound,
+		meitc_high_bound,
+		meitc_low_bound,
+		tab) {
   var formid = "e/1FAIpQLSdEwbpIjip3i6sooG23jF4sdFPlyhwmh_u9QAyBrYch2yOAkQ";
   var data = {
-    "entry.1864552612": uid, //the answer entry id in Google form
-    "entry.1012897442": snap_low_bound,
-    "entry.2009640771": snap_high_bound
+    "entry.1864552612": uid, //the answer entry id in Google form, use FB_LOAD_DATA
+    "entry.2011124292": domain_name,
+		"entry.152330822": timestamp_before,
+		"entry.394377277": timestamp_after,
+		"entry.406105465": secondstamp_passed,
+		"entry.804565614": marital_status,
+		"entry.881616199": vol_child,
+		"entry.766169195": age_child,
+		"entry.2106986342": household_size,
+		"entry.1012897442": estimated_income,
+		"entry.2009640771": asset_value,
+		"entry.2081899504": housing_status,
+		"entry.1705239387": disability,
+		"entry.1161373471": snap_high_bound,
+		"entry.1183432120": snap_low_bound,
+		"entry.948802778": hip_val,
+		"entry.1657386826": wic_val,
+		"entry.1416898123": mrvp_high_bound,
+		"entry.708177915": mrvp_low_bound,
+		"entry.642337684": tafdc_high_bound,
+		"entry.205208760": tafdc_low_bound,
+		"entry.831462337": mliheap_high_bound,
+		"entry.1017650847": mliheap_low_bound,
+		"entry.592202520": meitc_high_bound,
+		"entry.950706715": meitc_low_bound,
+		"entry.101558754": tab,
   };
 
   console.log("UID is: " + uid);
