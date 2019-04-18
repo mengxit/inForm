@@ -44,28 +44,25 @@ $(document).ready(function() {
 		}
 		event.preventDefault();
         handleClickPrevious();
-	
 	});
  });
 
 //handling next button and submission
 
 function handleClick() {
-	  console.log("q:" + q + " qmax:" + qMax)
+	  //console.log("q:" + q + " qmax:" + qMax)
 		// LOCATION FOR NULL VALUE WARNING 
-		
+		//validateForm(q)
+		//https://www.w3schools.com/js/js_validation.asp
 		if (q < qMax) {
         $('#myForm div.group:nth-child(' + q + ')').hide();
         $('#myForm div.group:nth-child(' + (q + 1) + ')').show();
 	
-
 		if (q == (qMax - 1)) {
             $('#btnNext').html('Find Out Your Benefits！');
 		}
         q++;
     } else {
-			$('#chart').show();
-
 		// get value of all input fields needed 
 		// store into variables
 		var marital_status = $('#marital-status').val();
@@ -77,95 +74,101 @@ function handleClick() {
 		var housing_status = $('#housing-status').val();
 		var disability = $('#disability').val();
 		
-		//add review before submiting
-		alert(
-			'Submitting\n'+
-			'Marital Status : ' + marital_status + '\n' +
-			'Number of Children : ' + vol_child + '\n' +
-			'Age of Youngest Child : ' + age_child + '\n' +
-			'Household Size : ' + household_size + '\n' +
-			'Estimated Monthly Income : ' + estimated_income + '\n' +
-			'Asset Value : ' + asset_value + '\n' +
-			'Housing Status : ' + housing_status + '\n' +
-			'Disability : ' + disability
-		); 
+		if (marital_status==null || vol_child==null || age_child==null || household_size==null || estimated_income==null || asset_value==null || housing_status==null || disability==null){
+		alert("Please answer all questions");		
+		}
+		else { 
+			//add review before submiting
+			alert(
+				'Submitting\n'+
+				'Marital Status : ' + marital_status + '\n' +
+				'Number of Children : ' + vol_child + '\n' +
+				'Age of Youngest Child : ' + age_child + '\n' +
+				'Household Size : ' + household_size + '\n' +
+				'Estimated Monthly Income : ' + estimated_income + '\n' +
+				'Asset Value : ' + asset_value + '\n' +
+				'Housing Status : ' + housing_status + '\n' +
+				'Disability : ' + disability
+			); 
+			
+
+		//Get SNAP value
+		var snap_val = snap(estimated_income, household_size);
+		var snap_high_bound = parseInt(snap_val.high_bound);
+		var snap_low_bound = parseInt(snap_val.low_bound);
+		$('#snap_result').text("Food Benefits (SNAP): Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
+
+
+		// Get HIP value
+		var hip_val =  hip(snap_high_bound, household_size);
+		hip_val = parseInt(hip_val);
+		console.log(hip_val); 
+		//PRINT HIP value
+		if (hip_val!= 0 ){
+		$('#hip_result').text("Health Food Program (HIP): Your potential benefit is $" + hip_val);
+			}
+
+		//Get WIC value
+		var wic_val = wic(vol_child, estimated_income, household_size, age_child);
+		//Print WIC value 
+		if (wic_val != "Disqualified" ){
+		$('#wic_result').text("Women, Infant & Children care (WIC): " + wic_val);
+		}
+
+
+		// Get MRVP value 
+		var mrvp_val = rental_voucher(estimated_income, household_size, vol_child);
 		
+		// MRVP bounds
+		var mrvp_high_bound = parseInt(mrvp_val.high_bound);
+		var mrvp_low_bound = parseInt(mrvp_val.low_bound);
 
-	//Get SNAP value
-	var snap_val = snap(estimated_income, household_size);
-	var snap_high_bound = parseInt(snap_val.high_bound);
-	var snap_low_bound = parseInt(snap_val.low_bound);
-	$('#snap_result').text("Food Benefits (SNAP): Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
+		if (mrvp_high_bound != 0){
+		$('#mrvp_result').text("Rental Assistance (MRVP): Your potential voucher range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
+		}
 
+		// Get TAFDC value 
+		var tafdc_val = tafdc(estimated_income, household_size, age_child,  asset_value, housing_status);
+		var tafdc_high_bound = parseInt(tafdc_val.tafdc_high_bound);
+		// Print TAFDC value 
+		if (tafdc_high_bound != 0){
+		$('#tafdc_result').text("Transitional Aid: (TAFDC) Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
+		}
 
-   // Get HIP value
-	 var hip_val =  hip(snap_high_bound, household_size);
-	 hip_val = parseInt(hip_val);
-   console.log(hip_val); 
-   //PRINT HIP value
-   if (hip_val!= 0 ){
-   $('#hip_result').text("Health Food Program (HIP): Your potential benefit is $" + hip_val);
-    }
+		// Get MLIHEAP value 
+		var mliheap_val = mliheap(estimated_income, household_size, housing_status);
+		var mliheap_high_bound = parseInt(mliheap_val.mliheap_high_bound);
+		var mliheap_low_bound = parseInt(mliheap_val.mliheap_low_bound);
+		// Print MLIHEAP value
+		if (mliheap_high_bound != 0 ){
+		$('#mliheap_result').text("Energy & Heat (MLIHEAP): Your potential benefit range is between: $" + mliheap_low_bound + " and $ " + mliheap_high_bound);
+		}
 
-   //Get WIC value
-	 var wic_val = wic(vol_child, estimated_income, household_size, age_child);
-  //Print WIC value 
-  if (wic_val != "Disqualified" ){
-   $('#wic_result').text("Women, Infant & Children care (WIC): " + wic_val);
-  }
+		// Get MEITC value 
+		var meitc_val = meitc(marital_status, estimated_income, vol_child);
+		// Print MEITC value 
+		var meitc_high_bound = parseInt(meitc_val.meitc_high_bound);
+		if (meitc_high_bound != 0 ){
+			$('#meitc_result').text("Income Tax Credit (MEITC): You may be eligble for between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
+		}	
+		
+		// Adding "total additional benefits" to be fed into the chart as "additional" value.
+		var tab = parseInt(snap_high_bound) + parseInt(hip_val) + parseInt(mrvp_high_bound) + parseInt(tafdc_val.tafdc_high_bound) + parseInt(mliheap_val.mliheap_high_bound) + parseInt(meitc_val.meitc_high_bound); 
+		
+		console.log(tab)
+		$('#chart').show();
+		generate_chart(estimated_income, tab)
+		// INCOME BAR GRAPH 
 
+		//////Log to Google Form
+		sendNetworkLog(
+			uid,
+			snap_low_bound,
+			snap_high_bound)
 
-  // Get MRVP value 
-   var mrvp_val = rental_voucher(estimated_income, household_size, vol_child);
-  
-  // MRVP bounds
-   var mrvp_high_bound = parseInt(mrvp_val.high_bound);
-   var mrvp_low_bound = parseInt(mrvp_val.low_bound);
-
-   if (mrvp_high_bound != 0){
-   $('#mrvp_result').text("Rental Assistance (MRVP): Your potential voucher range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
-   }
-
-  // Get TAFDC value 
-	var tafdc_val = tafdc(estimated_income, household_size, age_child,  asset_value, housing_status);
-	var tafdc_high_bound = parseInt(tafdc_val.tafdc_high_bound);
-	// Print TAFDC value 
-  if (tafdc_high_bound != 0){
-	$('#tafdc_result').text("Transitional Aid: (TAFDC) Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
-  }
-
-	// Get MLIHEAP value 
-	var mliheap_val = mliheap(estimated_income, household_size, housing_status);
-	var mliheap_high_bound = parseInt(mliheap_val.mliheap_high_bound);
-	var mliheap_low_bound = parseInt(mliheap_val.mliheap_low_bound);
-	// Print MLIHEAP value
-	if (mliheap_high_bound != 0 ){
-	$('#mliheap_result').text("Energy & Heat (MLIHEAP): Your potential benefit range is between: $" + mliheap_low_bound + " and $ " + mliheap_high_bound);
+			return false;
+			}
 	}
-
-	// Get MEITC value 
-	var meitc_val = meitc(marital_status, estimated_income, vol_child);
-	// Print MEITC value 
-	var meitc_high_bound = parseInt(meitc_val.meitc_high_bound);
-	if (meitc_high_bound != 0 ){
-		$('#meitc_result').text("Income Tax Credit (MEITC): You may be eligble for between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
-	}	
-	
-	// Adding "total additional benefits" to be fed into the chart as "additional" value.
-	var tab = parseInt(snap_high_bound) + parseInt(hip_val) + parseInt(mrvp_high_bound) + parseInt(tafdc_val.tafdc_high_bound) + parseInt(mliheap_val.mliheap_high_bound) + parseInt(meitc_val.meitc_high_bound); 
-	
-	console.log(tab)
-	generate_chart(estimated_income, tab)
-	// INCOME BAR GRAPH 
-
-	//////Log to Google Form
-	sendNetworkLog(
-		uid,
-		snap_low_bound,
-		snap_high_bound)
-
-		return false;
-    }
 }
 
 //handling "previous" button
@@ -697,4 +700,6 @@ function findFirstString(str, choices) {
 	  }
 	}
 	return '?';
-  }
+}
+
+
