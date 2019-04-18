@@ -357,11 +357,11 @@ function snap(estimated_income, household_size){
 
 function hip(snap_val, household_size){
 	//NEED TO UPDATE QUESTION TO INCLUDE MONTHLY INCOME NOT YEARLY & CONVERT TO INT
-	parseInt(snap_val);
-	parseInt(household_size);
+	parseInt(snap_val); // 760
+	parseInt(household_size); // 5 
 	var hip_value = 0;
 	array_loc = Math.round(household_size/2);
-	var hip_array = [40,60,80]
+	var hip_array = [40,60,80,80,80,80]
 	if (snap_val>0){
 		hip_value = hip_array[array_loc];
 		}	
