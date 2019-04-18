@@ -24,9 +24,26 @@
     top: 60%; 
     left: 48%;
   }
+
+  #title1 {
+    color: white;
+  }
+
+
   .btn  {
     -webkit-appearance: none;
+    border: 2px solid white;
+    background-color:  rgb(247, 209, 52);
     position:relative; 
-    font-size: 30px;
+    font-size: 18px;
+    color: white;
+    padding: 14px 28px;
+    cursor: pointer;
   }
+
+  .btn:hover {
+    background: rgb(227, 189, 32);
+    color: white;
+  }
+ 
 
