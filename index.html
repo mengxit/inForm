@@ -44,19 +44,23 @@
 	<form id="myForm">
 	  <div class="form-group"> 
      
-      <div class="group dropdown">
-        <label for="marital-status"> What is your marital status? </label>
-        <br>  </br>
-        <select name="marital-status" id="marital-status">
-              <option disabled selected value> Choose One </option>
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-              <option value="Divorced">Divorced</option>
-              <option value="Widowed">Widowed</option>
-            </select><br/><br/>
-      </div>
-
-
+      <div class="group">
+        <label for="household-size">How many people live in your household?</label>
+        <br>  
+        <select name="household-size" id="household-size">  <br/>
+            <option disabled selected value> Choose One</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10+">10+</option>
+          </select><br/><br/>
+    </div>
   <!-- Parseint will treat "6+" as 6 -->
       <div class="group">
         <label for="vol-child">How many children do you have?</label>
@@ -89,22 +93,15 @@
             </select><br/><br/>
       </div>
 
-
-      <div class="group">
-          <label for="household-size">How many people live in your household?</label>
-          <br>  
-          <select name="household-size" id="household-size"> <br/>
+      <div class="group dropdown">
+        <label for="marital-status"> What is your marital status? </label>
+        <br> 
+        <select name="marital-status" id="marital-status"></br>
               <option disabled selected value> Choose One </option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10+">10+</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Divorced">Divorced</option>
+              <option value="Widowed">Widowed</option>
             </select><br/><br/>
       </div>
 
@@ -152,8 +149,6 @@
             </select><br/><br/>
       </div>
 
-
-
       <div class="group">
         <label for="housing-status">What type of housing do you live in?</label>
         <br> 
@@ -164,7 +159,6 @@
             <option value="Subsidized">Subsidized</option>
           </select><br/><br/>
       </div>
-
 
       <div class="group">
         <label for="disability">Does anyone in the household have a disability?</label>
@@ -249,12 +243,13 @@
   </div>
 
   <div id="snap_result"></div>
+  <div id="hip_result"></div>
   <div id="wic_result"></div>
   <div id="mrvp_result"></div>
   <div id="tafdc_result"></div>
   <div id="mliheap_result"></div>
   <div id="meitc_result"></div>
-  <div id="hip_result"></div>
+  
   <br> </br>
   <br> </br>
   <br> </br>
