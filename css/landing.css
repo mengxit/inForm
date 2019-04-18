@@ -1,0 +1,32 @@
+
+   @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+ 
+ #title{
+    font-family: Futura;
+    text-align: center;
+    font-size: 30px;
+  }
+/*
+  .form-group {
+    text-align: center;
+  }
+*/ 
+  body {
+    font-family: Futura, sans-serif;
+    background-color: rgb(247, 209, 52);
+  }
+
+  #begin {
+    position: absolute;
+    height:35px; 
+    width: 60px;
+    top: 60%; 
+    left: 48%;
+  }
+  .btn  {
+    -webkit-appearance: none;
+    position:relative; 
+    font-size: 30px;
+  }
+
