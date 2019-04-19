@@ -106,8 +106,9 @@ function handleClick() {
 		var snap_val = snap(estimated_income, household_size);
 		var snap_high_bound = parseInt(snap_val.high_bound);
 		var snap_low_bound = parseInt(snap_val.low_bound);
+		if (snap_high_bound!= 0){
 		$('#snap_result').text("Food Benefits (SNAP): Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
-
+		}
 
 		// Get HIP value
 		var hip_val =  hip(snap_high_bound, household_size);
@@ -347,8 +348,26 @@ function snap(estimated_income, household_size){
 				low_bound=snap_Max[i];
 				}
         	}
-        }
-    
+				}
+				
+	var income_adjustment = parseInt(estimated_income) * 0.3;
+	
+	low_bound = Math.round(low_bound - income_adjustment);
+
+	if (low_bound < 15) //min level of SNAP benefit is 15
+	{
+		high_bound = 15;
+	}
+	
+	
+	high_bound = Math.round(high_bound - income_adjustment);
+	
+	if (high_bound < 15) //min level of SNAP benefit is 15. If high_bound does not reach 15, disqualify for SNAP
+	{
+		high_bound = 0;
+		low_bound = 0;
+	}
+
     return {
 		low_bound: low_bound,
 		high_bound: high_bound
@@ -473,6 +492,7 @@ function rental_voucher(estimated_income, household_size, vol_child){
 	// Determine voucher size by doing a lookup. 
 	// voucher_size = parseInt(v_array[ArrayLoc]);
 	
+	if (ArrayLoc <= 19){ //see if income range is within qualification
 	// Upper bound for voucher amount.
 	high_bound = voucher[vol_room-1][ArrayLoc];
 
@@ -484,6 +504,12 @@ function rental_voucher(estimated_income, household_size, vol_child){
 	}
 	else {
 		low_bound = voucher[vol_room-2][ArrayLoc];
+	}
+	}
+
+	else{
+		high_bound = 0;
+		low_bound = 0;
 	}
 
 	var range = "Your potential MRVP range is between " + low_bound +" and "+ high_bound + "per month.";
@@ -511,7 +537,7 @@ function tafdc(estimated_income, household_size, age_child, asset_value, housing
 	var tafdc_size_public = [1,428,	531,	633,	731,	832,	936,	1037,	1137,	1237,	1338];
 	var HouseholdMax = 10;
 
-	if ((asset_value == "Less then 20,000") && (age_child != "18+") && (age_child != "Not Applicable"))
+	if ((asset_value == "Less then 5,000") && (age_child != "18+") && (age_child != "Not Applicable"))
 	{
 		//console.log("tafdc condition pass");
 
@@ -661,7 +687,7 @@ function meitc(marital_status, estimated_income, vol_child){
 		(parseInt(estimated_income) < incomearray_married[child_counter][1])){
 
 			meitc_min = meitc_credit[child_counter];
-			meitc_max = meitc_creditp[child_counter +1];
+			meitc_max = meitc_credit[child_counter +1];
 		
 		}
 
