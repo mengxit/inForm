@@ -41,6 +41,21 @@
   }
 
 
+  #transition0 {
+    color: black;
+    margin-left: 150px;
+    margin-right: 150px;
+  }
+
+  #transition1 {
+    color: grey;
+    margin-left: 150px;
+    margin-right: 150px;
+
+  }
+
+
+
   .btn  {
     -webkit-appearance: none;
     border: 2px solid white;
