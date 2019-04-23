@@ -45,25 +45,12 @@
 
   #transition01 {
     color: black;
-    margin-top: 200px;
-    margin-left: 150px;
-    margin-right: 150px;
-    font-weight: bold;
-  }
-
-  #transition02 {
-    color: black;
     margin-top: 50px;
     margin-left: 150px;
     margin-right: 150px;
     font-weight: bold;
   }
 
-  #transition03 {
-    color: black;
-    margin-left: 150px;
-    margin-right: 150px;
-  }
 
   #transition1 {
     color: grey;
