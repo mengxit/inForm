@@ -1,0 +1,89 @@
+
+   @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+
+  body {
+    font-family: Futura, sans-serif;
+    background-color: rgb(247, 209, 52);
+  }
+
+  #content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  #content > div {
+    display: flex;
+  }
+
+
+  #opening {
+    color: black;
+    margin-top: 48px;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-weight: bold;
+  }
+
+
+  #note1{
+    color: grey;
+    margin-left: 2%;
+    margin-right: 2%;
+
+  }
+
+  #overview {
+    max-width: 70%;
+    height: auto;
+    width: auto\9; /* ie8 */
+  }
+
+  /*Use different sizing if mobile screen*/
+  @media (max-width: 600px) { 
+
+    #overview {
+      max-width: 100%;
+      height: auto;
+      width: auto\9; /* ie8 */
+    }
+
+    #opening {
+      color: black;
+      margin-top: 48px;
+      margin-left: 2%;
+      margin-right: 2%;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    #note1{
+      color: grey;
+      margin-left: 2%;
+      margin-right: 2%;
+      font-size: 8px;
+    }
+}
+
+
+  .btn  {
+    -webkit-appearance: none;
+    margin-top: 48px;
+    border: 2px solid white;
+    background-color:  rgb(247, 209, 52);
+    position:relative; 
+    font-size: 18px;
+    color: white;
+    padding: 14px 28px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background: rgb(227, 189, 32);
+    color: white;
+  }
+ 
+
