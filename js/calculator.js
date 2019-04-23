@@ -21,8 +21,9 @@ var secondstamp_before = Math.floor(Date.now() / 1000);
 var timestamp_before = dt_before.toUTCString();
 console.log("before:" + timestamp_before);
 
-// Hide the feedback page
+// Hide the feedback page and pdf
 $('#feedback').hide();
+$('#pdf').hide();
 
 //active click funtions once whole page finishes loading
 $(document).ready(function() {
@@ -185,6 +186,7 @@ function handleClick() {
 		generate_chart(estimated_income, tab, tab_low)
 
 		$('#feedback').show();
+		$('#pdf').show();
 
 		// Record timestamp after
 		var dt_after = new Date();
