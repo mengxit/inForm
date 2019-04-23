@@ -5,8 +5,7 @@ MDE Studio 3 - Nudge+
 --Review form before submission
 --Form percentage progress (as in figma) 
 --Send different message if does not qualify, or if none of benefits is qualified
---Blank submissions not allowed
--- -- Create an array of the question values, then each time the "next" button is clicked, look up that value according to the Q value at that time. Use: https://www.w3schools.com/js/js_validation.asp
+
 
 #Algorithm Enhancement
 --Make the outputs a range (Min - Max), maybe retrieve Array[i] and Array[i + 1]
@@ -19,8 +18,7 @@ MDE Studio 3 - Nudge+
 
 #Begin Page & Progress Bar
 -- The progress bar currently begins at 0, and progresses with a lag of one answer.
--- Creating a 'Begin' Page before the  questions start, and label that button 'nxtbutton' which would help move the progress bar up once and begin at the right moment. 
--- A begin page would also be a better UX. 
+
 
 #Tips
 --Hold option + command + up/down for multiple rows editing
