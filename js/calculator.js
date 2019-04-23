@@ -251,7 +251,7 @@ function generate_chart(estimated_income, tab){
 		},
 
 		title: {
-			text: "Estimated Monthly Budget With Benefits",
+			text: "Estimated Monthly Income With Benefits",
 			align: 'center',
 			margin: 10,
 			offsetX: 0,
@@ -277,7 +277,7 @@ function generate_chart(estimated_income, tab){
 			// colors: ['#FF0000'],
 			data: [estimated_income]
 	},{
-			name: 'Additional Income',
+			name: 'Income from Benefits',
 			// fill: ['#2F80ED'],
 			// colors: ['#2F80ED'],
 			data: [tab]
@@ -678,7 +678,7 @@ function meitc(marital_status, estimated_income, vol_child){
 		[2068, 4663]
 	]
 
-	var meitc_credit = [1,122,811,1340,1508]
+	var meitc_credit = [1,10,68,112,126]
 
 	var child_counter = parseInt(vol_child);
 
