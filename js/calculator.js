@@ -21,6 +21,9 @@ var secondstamp_before = Math.floor(Date.now() / 1000);
 var timestamp_before = dt_before.toUTCString();
 console.log("before:" + timestamp_before);
 
+// Hide the feedback page
+$('#feedback').hide();
+
 //active click funtions once whole page finishes loading
 $(document).ready(function() {
 
@@ -181,6 +184,8 @@ function handleClick() {
 		$('#chart').show();	
 		generate_chart(estimated_income, tab, tab_low)
 
+		$('#feedback').show();
+
 		// Record timestamp after
 		var dt_after = new Date();
 		var secondstamp_after = Math.floor(Date.now() / 1000);
@@ -280,7 +285,7 @@ function generate_chart(estimated_income, tab, tab_low){
 			// colors: ['#FF0000'],
 			data: [estimated_income]
 	},{
-			name: 'Additional Income',
+			name: 'Income from Benefits',
 			// fill: ['#2F80ED'],
 			// colors: ['#2F80ED'],
 			data: [tab]
@@ -681,7 +686,7 @@ function meitc(marital_status, estimated_income, vol_child){
 		[2068, 4663]
 	]
 
-	var meitc_credit = [1,122,811,1340,1508]
+	var meitc_credit = [1,10,68,112,126]
 
 	var child_counter = parseInt(vol_child);
 

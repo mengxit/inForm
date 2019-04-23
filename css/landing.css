@@ -16,6 +16,7 @@
     font-family: Futura, sans-serif;
     background-color: rgb(247, 209, 52);
   }
+
   #content {
     display: flex;
     align-items: center;
@@ -23,6 +24,7 @@
     flex-direction: column;
     height: 100vh;
   }
+
   #content > div {
     display: flex;
   }
@@ -39,6 +41,24 @@
   #title1 {
     color: white;
   }
+
+
+  #transition01 {
+    color: black;
+    margin-top: 50px;
+    margin-left: 150px;
+    margin-right: 150px;
+    font-weight: bold;
+  }
+
+
+  #transition1 {
+    color: grey;
+    margin-left: 150px;
+    margin-right: 150px;
+
+  }
+
 
 
   .btn  {
