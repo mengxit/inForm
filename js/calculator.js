@@ -261,7 +261,7 @@ function generate_chart(estimated_income, tab, tab_low){
 		},
 
 		title: {
-			text: "Potential benefit income available to you: $"+tab_low+" and $"+tab,
+			text: "Your income including benefits",
 			align: 'center',
 			margin: 10,
 			offsetX: 0,
