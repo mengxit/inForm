@@ -102,12 +102,13 @@ function handleClick() {
 			); 
 			
 
+		
 		//Get SNAP value
 		var snap_val = snap(estimated_income, household_size);
 		var snap_high_bound = parseInt(snap_val.high_bound);
 		var snap_low_bound = parseInt(snap_val.low_bound);
 		if (snap_high_bound!= 0){
-		$('#snap_result').text("Food Benefits (SNAP): Your potential benefit range is between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
+		$('#snap_result').text("Nutritional Assistance (SNAP): Allocation between: $" + parseInt(snap_low_bound) + " and $" + parseInt(snap_high_bound)); 
 		}
 
 		// Get HIP value
@@ -116,7 +117,7 @@ function handleClick() {
 		console.log(hip_val); 
 		//PRINT HIP value
 		if (hip_val!= 0 ){
-		$('#hip_result').text("Health Food Program (HIP): Your potential benefit is $" + hip_val);
+		$('#hip_result').text("Health Food Incentive Program (HIP): $" + hip_val);
 			}
 
 		//Get WIC value
@@ -135,7 +136,7 @@ function handleClick() {
 		var mrvp_low_bound = parseInt(mrvp_val.low_bound);
 
 		if (mrvp_high_bound != 0){
-		$('#mrvp_result').text("Rental Assistance (MRVP): Your potential voucher range is between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
+		$('#mrvp_result').text("Rental Assistance (MRVP): Voucher range between: $" + parseInt(mrvp_low_bound) + " and $" + parseInt(mrvp_high_bound)); 
 		}
 
 		// Get TAFDC value 
@@ -144,7 +145,7 @@ function handleClick() {
 		var tafdc_low_bound = parseInt(tafdc_val.tafdc_low_bound);
 		// Print TAFDC value 
 		if (tafdc_high_bound != 0){
-		$('#tafdc_result').text("Transitional Aid: (TAFDC) Your potential benefit range is between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
+		$('#tafdc_result').text("Transitional Aid (TAFDC): Assistance range between: $" + parseInt(tafdc_val.tafdc_low_bound) + " and $ " + parseInt(tafdc_val.tafdc_high_bound));
 		}
 
 		// Get MLIHEAP value 
@@ -153,7 +154,7 @@ function handleClick() {
 		var mliheap_low_bound = parseInt(mliheap_val.mliheap_low_bound);
 		// Print MLIHEAP value
 		if (mliheap_high_bound != 0 ){
-		$('#mliheap_result').text("Energy & Heat (MLIHEAP): Your potential benefit range is between: $" + mliheap_low_bound + " and $ " + mliheap_high_bound);
+		$('#mliheap_result').text("Energy & Heat Assistance (MLIHEAP): Your potential benefit range is between: $" + mliheap_low_bound + " and $ " + mliheap_high_bound);
 		}
 
 		// Get MEITC value 
@@ -162,16 +163,23 @@ function handleClick() {
 		var meitc_high_bound = parseInt(meitc_val.meitc_high_bound);
 		var meitc_low_bound = parseInt(meitc_val.meitc_low_bound);
 		if (meitc_high_bound != 0 ){
-			$('#meitc_result').text("Income Tax Credit (MEITC): You may be eligble for between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
+			$('#meitc_result').text("Income Tax Credit (MEITC): Your tax credit may be between: $" + parseInt(meitc_val.meitc_low_bound) + " and $ " + parseInt(meitc_val.meitc_high_bound));
 		}	
 		
 		// Adding "total additional benefits" to be fed into the chart as "additional" value.
 		var tab = parseInt(snap_high_bound) + parseInt(hip_val) + parseInt(mrvp_high_bound) + parseInt(tafdc_val.tafdc_high_bound) + parseInt(mliheap_val.mliheap_high_bound) + parseInt(meitc_val.meitc_high_bound); 
-		
+		var tab_low = parseInt(snap_low_bound) + parseInt(hip_val) + parseInt(mrvp_low_bound) + parseInt(tafdc_val.tafdc_low_bound) + parseInt(mliheap_val.mliheap_low_bound) + parseInt(meitc_val.meitc_low_bound); 
+		if(tab > 0){
+			$('#intro_result').text("You may qualify for the following benefit amounts:");
+			$('#learn_more').text("To learn more about enrolling in these programs, view this document");
+		}
+		else{
+			$('#intro_result').text("Please visit benefits.gov for a complete list of benefits available to you.");
+		}
 		// INCOME BAR GRAPH 
 		console.log(tab)
-		$('#chart').show();
-		generate_chart(estimated_income, tab)
+		$('#chart').show();	
+		generate_chart(estimated_income, tab, tab_low)
 
 		// Record timestamp after
 		var dt_after = new Date();
@@ -235,7 +243,7 @@ function handleClickPrevious() {
 	}
 }
 	
-function generate_chart(estimated_income, tab){
+function generate_chart(estimated_income, tab, tab_low){
 	estimated_income = parseInt(estimated_income);
 	tab = parseInt(tab);
 	var options = {
@@ -246,7 +254,7 @@ function generate_chart(estimated_income, tab){
 		},
 
 		title: {
-			text: "Estimated Monthly Budget With Benefits",
+			text: "Potential benefit income available to you: $"+tab_low+" and $"+tab,
 			align: 'center',
 			margin: 10,
 			offsetX: 0,
