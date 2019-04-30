@@ -425,15 +425,15 @@ function wic(vol_child, estimated_income, household_size, age_child){
 
 				if(age_child == "0-1")
 				{
-					wic_val = "You qualify for both infant and mother food package."
+					wic_val = "You qualify for both infant and mother package."
 				}
 				if(age_child == "2-4")
 				{
-					wic_val = "You qualify for child food package."
+					wic_val = "You qualify for child package."
 				}
 				if(age_child == "Expecting in 4 Months")
 				{
-					wic_val = "You qualify for mother food package."
+					wic_val = "You qualify for mother package."
 				}
 			}
         	}
@@ -614,8 +614,8 @@ function mliheap(estimated_income, household_size, housing_status){
 	[3892,	4865,	5838,	6810,	7783,	8024],
 	[4252,	5315,	6378,	7440,	8195,	8195]];
 
-	var mliheap_unsubsidized = [1, 225, 191, 168, 148, 148, 116];
-	var mliheap_subsidized = [1, 157, 138, 122,107,107,84];
+	var mliheap_unsubsidized = [225, 191, 168, 148, 148, 116, 1];
+	var mliheap_subsidized = [157, 138, 122,107,107, 84, 1];
 
 
 
@@ -626,36 +626,42 @@ function mliheap(estimated_income, household_size, housing_status){
 
 			//console.log("mliheap qualified");
 
-			var mliheaplevelcounter = 5; //set initial mliheap level counter
+			var mliheaplevelcounter = 6; //set initial mliheap level counter
 
 			
-				for (var j = 4; j >= 0; j--) //loop through the array to find the level
+				for (var j = 5; j >= 0; j--) //loop through the array to find the level
 				{
 					if (parseInt(estimated_income) <= IncomeArray[i][j]){
 						mliheaplevelcounter = j;
 					}	
 				}
+
+				if ( mliheaplevelcounter != 6){ //only qualify for if income satisfies criteria 
 			
 				if (housing_status == "Subsidized") {
-
-					mliheap_min = mliheap_subsidized[mliheaplevelcounter]
-					mliheap_max = mliheap_subsidized[mliheaplevelcounter+1]
-
+					mliheap_min = mliheap_subsidized[mliheaplevelcounter+1]
+					mliheap_max = mliheap_subsidized[mliheaplevelcounter]
+					if (mliheap_min == mliheap_max){
+						mliheap_min = mliheap_subsidized[mliheaplevelcounter+2]
+					}
 				}
 				
 				else {			
 					console.log("mliheap unsub");
 					
-					mliheap_min = mliheap_subsidized[mliheaplevelcounter]
-					mliheap_max = mliheap_subsidized[mliheaplevelcounter+1]
+					mliheap_min = mliheap_unsubsidized[mliheaplevelcounter+1]
+					mliheap_max = mliheap_unsubsidized[mliheaplevelcounter]
+					
+					if (mliheap_min == mliheap_max){
+						mliheap_min = mliheap_unsubsidized[mliheaplevelcounter+2]
+					}
 				
 				}
+				} 
 
 			}	
 		}
 	}
-
-	
 
 	mliheap_val =
 	{
