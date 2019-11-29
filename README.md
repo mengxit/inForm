@@ -1,24 +1,11 @@
-# nudgerplus
-MDE Studio 3 - Nudge+
+# inForm
+Harvard MDE(Design Engineering) Studio Spring 2019 Project 
 
-#Features to Dev
---Review form before submission
---Form percentage progress (as in figma) 
---Send different message if does not qualify, or if none of benefits is qualified
+# Benefit Calculator in 8 simple questions
+# Covers the major benefits in MA
 
-
-#Algorithm Enhancement
---Make the outputs a range (Min - Max), maybe retrieve Array[i] and Array[i + 1]
--- -- Being conservative here might be the best route - as to not be overzealous.
---Double check that all income/benefit boundary are MONTHLY
---Take the upper boundary in income bucket has the potential danger to "disqualify" people for benefits they should be eligible for
---Double check child count and household count (e.g. household count should always > child count)
---Edge cases: 
--- -- what will happen in max child count/income/household count senario? How will the values be passed and processed?
-
-#Begin Page & Progress Bar
+# Begin Page & Progress Bar
 -- The progress bar currently begins at 0, and progresses with a lag of one answer.
 
-
-#Tips
+# Tips
 --Hold option + command + up/down for multiple rows editing
